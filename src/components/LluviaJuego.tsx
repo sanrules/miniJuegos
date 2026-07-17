@@ -113,8 +113,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
       if (newTarget) {
         setTarget(newTarget);
         activeTargetRef.current = newTarget.code;
-        greetedRef.current = false;
-        setTimeout(() => greet(`¡Ahora atrapa las de ${newTarget.name}!`), 1000);
+        setTimeout(() => speak(`¡Ahora atrapa las de ${newTarget.name}!`), 1000);
       }
     } else {
       adjustWeight(activeTargetRef.current!, false);

@@ -1,6 +1,6 @@
 import type { Continent, Level } from '../data/countries';
 import { continentNames, continentAnimals, levelEmojis, levelNames } from '../data/countries';
-export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'lluvia';
+export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'lluvia' | 'puzle' | 'cucu' | 'animales';
 
 interface GameSelectionProps {
   level: Level;
@@ -15,6 +15,9 @@ const gameNames: Record<GameId, string> = {
   rasca: 'Rasca',
   intruso: 'Intruso',
   lluvia: 'Lluvia',
+  puzle: 'Puzle',
+  cucu: 'Cucú',
+  animales: 'Animales',
 };
 
 const games: { id: GameId; icon: string; color: string }[] = [
@@ -23,10 +26,12 @@ const games: { id: GameId; icon: string; color: string }[] = [
   { id: 'rasca', icon: '✋', color: 'hover:border-amber-200 focus:ring-amber-300' },
   { id: 'intruso', icon: '🕵️', color: 'hover:border-rose-200 focus:ring-rose-300' },
   { id: 'lluvia', icon: '🌧️', color: 'hover:border-cyan-200 focus:ring-cyan-300' },
+  { id: 'puzle', icon: '🧩', color: 'hover:border-teal-200 focus:ring-teal-300' },
+  { id: 'cucu', icon: '🌳', color: 'hover:border-emerald-200 focus:ring-emerald-300' },
+  { id: 'animales', icon: '🐼', color: 'hover:border-pink-200 focus:ring-pink-300' },
 ];
 
 export function GameSelection({ level, continent, onSelectGame, onBack }: GameSelectionProps) {
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-6 flex items-center">
@@ -42,11 +47,8 @@ export function GameSelection({ level, continent, onSelectGame, onBack }: GameSe
       <main className="max-w-lg mx-auto mt-8">
         <div className="flex flex-col gap-4">
           {games.map(game => (
-            <button
-              key={game.id}
-              onClick={() => { onSelectGame(game.id); }}
-              className={`flex flex-col items-center justify-center gap-3 p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl active:scale-[0.97] transition-all border-2 border-transparent ${game.color} focus:outline-none focus:ring-4`}
-            >
+            <button key={game.id} onClick={() => { onSelectGame(game.id); }}
+              className={`flex flex-col items-center justify-center gap-3 p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl active:scale-[0.97] transition-all border-2 border-transparent ${game.color} focus:outline-none focus:ring-4`}>
               <span className="text-6xl md:text-7xl">{game.icon}</span>
               <span className="text-lg font-bold text-gray-600">{gameNames[game.id]}</span>
             </button>

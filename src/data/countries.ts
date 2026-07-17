@@ -89,6 +89,23 @@ export const continentAnimals: Record<Continent, string> = {
   OC: '🦘',
 };
 
+export interface AnimalEntry {
+  emoji: string;
+  name: string;
+  countryCodes: string[];
+}
+
+export const animals: AnimalEntry[] = [
+  { emoji: '🦘', name: 'canguro', countryCodes: ['AU'] },
+  { emoji: '🐨', name: 'koala', countryCodes: ['AU'] },
+  { emoji: '🐼', name: 'panda', countryCodes: ['CN'] },
+  { emoji: '🦁', name: 'león', countryCodes: ['KE', 'ZA'] },
+  { emoji: '🐻', name: 'oso polar', countryCodes: ['CA'] },
+  { emoji: '🦅', name: 'águila', countryCodes: ['US'] },
+];
+
+export const puzzleFlags = ['JP', 'ES', 'FR', 'CA', 'GB', 'DE', 'IT', 'BR'];
+
 export type Level = 'explorer' | 'continents' | 'world' | 'expert';
 
 export const levelNames: Record<Level, string> = {

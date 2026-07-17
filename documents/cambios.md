@@ -20,3 +20,9 @@
 Fase 6 
 - El "rasca" en el móvil no funciona.
 - Añade algunos textos y títulos en los menús  y botones (muy sencillos) para los padres. Manten los emojis.
+
+---
+Fase 7.
+- AnimalesJuego nunca termina. Se queda parado y no muestra la pantalla de fin (5 rondas).
+- CucuJuego no funciona bien: la bandera está escondida detrás de un elemento y al pulsar ese, no pasa nada. Pulsas otro y te dice que la bandera estaba ahí.
+- PuzleJuego muestra la misma mitad para completar el puzle que la que ya hay. Si tiene que dividir la bandera en AB , te enseña A y las opciones de abajo son A todas.
