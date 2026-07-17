@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
-import { continents, type Continent, continentNames, continentAnimals, continentColors, countries } from '../data/countries';
+import { continents, type Continent, continentNames, continentAnimals, continentColors } from '../data/countries';
 
 interface MapSelectionProps {
   onSelectContinent: (continent: Continent) => void;
 }
 
 export function MapSelection({ onSelectContinent }: MapSelectionProps) {
-  const { speak, isSupported } = useSpeech();
+  const { speak } = useSpeech();
 
   const handlePress = useCallback((continent: Continent) => {
     speak(`¡${continentNames[continent]}!`);
@@ -20,20 +20,6 @@ export function MapSelection({ onSelectContinent }: MapSelectionProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 py-8 px-4">
-      <header className="max-w-5xl mx-auto mb-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
-          🗺️ Elige tu Continente
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Toca o pasa el ratón por encima para escuchar el nombre
-        </p>
-        {!isSupported && (
-          <p className="mt-4 text-amber-700 bg-amber-50 px-4 py-2 rounded-lg inline-block text-sm">
-            ⚠️ Tu navegador no soporta síntesis de voz. Prueba con Chrome, Edge o Safari.
-          </p>
-        )}
-      </header>
-
       <main className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {continents.map((continent) => (
@@ -44,10 +30,6 @@ export function MapSelection({ onSelectContinent }: MapSelectionProps) {
               onHover={() => handleHover(continent)}
             />
           ))}
-        </div>
-
-        <div className="mt-12 text-center text-sm text-gray-500">
-          <p>5 continentes · {countries.length} países por descubrir</p>
         </div>
       </main>
     </div>

@@ -6,3 +6,12 @@
 - En "lluvia de banderas", modifica la velocidad de caída para que sea ligeramente más lenta.
 - En "cual es la diferente" siempre se repiten las mismas banderas.
 - Cuando entras a cualquier minijuego, solo lee el título pero no el nombre del país.
+
+---
+- En @AdivinaJuegos.tsx, @ParejasJuego.tsx, cuando aciertas lee "cañon de confeti país". Tendría que decir: "acertaste".
+- En @AdivinaJuegos.tsx, hacemos rondas de 10 banderas. En esa ronda, no se puede repetir ninguna bandera.
+  - Cuando termine la ronda, diremos cuantos aciertos y cuantos fallos.
+  - Posible fase 6: añadir un modo de repaso de las banderas que fallemos.
+- En ParejasJuego.tsx, cuando entremos al juego, tendrá que decir "Selecciona las parejas de banderas".
+- En ParejasJuego.tsx también permitiremos elegir de las banderas de abajo. Ahora mismo solo se puede seleccionar una arriba y su correspondiente abajo.
+- En la celebración al finalizar un juego, diremos "Muy bien".

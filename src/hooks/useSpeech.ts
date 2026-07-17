@@ -8,6 +8,7 @@ interface UseSpeechReturn {
 }
 
 export function useSpeech(): UseSpeechReturn {
+  const isSupportedRef = useRef(false);
   const [isSupported, setIsSupported] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
@@ -16,6 +17,7 @@ export function useSpeech(): UseSpeechReturn {
   useEffect(() => {
     const checkSupport = () => {
       const supported = 'speechSynthesis' in window;
+      isSupportedRef.current = supported;
       setIsSupported(supported);
       return supported;
     };
@@ -55,7 +57,7 @@ export function useSpeech(): UseSpeechReturn {
   }, []);
 
   const speak = useCallback((text: string) => {
-    if (!isSupported) return;
+    if (!isSupportedRef.current) return;
 
     window.speechSynthesis.cancel();
 
@@ -76,7 +78,7 @@ export function useSpeech(): UseSpeechReturn {
     utterance.onerror = () => setIsSpeaking(false);
 
     window.speechSynthesis.speak(utterance);
-  }, [isSupported, getSpanishVoice]);
+  }, [getSpanishVoice]);
 
   const cancel = useCallback(() => {
     if (isSupported) {

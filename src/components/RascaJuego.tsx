@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
+import { type Level, levelGreetings } from '../data/countries';
 import type { Country } from '../data/countries';
 
 interface RascaJuegoProps {
-  continentCountries: Country[];
+  level: Level;
+  poolCountries: Country[];
   onBack: () => void;
   onFinish?: (score: number) => void;
 }
@@ -13,9 +15,39 @@ const FLAG_BASE = 'https://flagcdn.com';
 const BRUSH_RADIUS = 28;
 const REVEAL_THRESHOLD = 0.55;
 
-export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoProps) {
+function getExpertDistractors(target: Country, pool: Country[], count: number): Country[] {
+  const result: Country[] = [];
+  for (const code of target.similar) {
+    if (result.length >= count) break;
+    const found = pool.find(c => c.code === code);
+    if (found) result.push(found);
+  }
+  if (result.length < count) {
+    const sameColor = pool.filter(
+      c => c.code !== target.code && c.colorGroup === target.colorGroup && !result.some(r => r.code === c.code)
+    ).sort(() => Math.random() - 0.5);
+    for (const c of sameColor) {
+      if (result.length >= count) break;
+      result.push(c);
+    }
+  }
+  if (result.length < count) {
+    const random = pool.filter(
+      c => c.code !== target.code && !result.some(r => r.code === c.code)
+    ).sort(() => Math.random() - 0.5);
+    for (const c of random) {
+      if (result.length >= count) break;
+      result.push(c);
+    }
+  }
+  return result;
+}
+
+export function RascaJuego({ level, poolCountries, onBack, onFinish }: RascaJuegoProps) {
   const { speak } = useSpeech();
-  const { adjustWeight, getRandomCountry } = useAdaptiveLearning(continentCountries);
+  const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
+  const lastCodeRef = useRef<string | null>(null);
+  const greetedRef = useRef(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +59,6 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
   const [options, setOptions] = useState<Country[]>([]);
   const [revealed, setRevealed] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
-  const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
 
   const initCanvas = useCallback(() => {
@@ -69,26 +100,37 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
   }, []);
 
   const generateRound = useCallback(() => {
-    const t = getRandomCountry(continentCountries);
+    const available = poolCountries.filter(c => c.code !== lastCodeRef.current);
+    const pool = available.length > 0 ? available : poolCountries;
+    const t = getRandomCountry(pool);
     if (!t) return;
+    lastCodeRef.current = t.code;
 
-    const distractors = continentCountries
-      .filter(c => c.code !== t.code)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 2);
+    let distractors: Country[];
+    if (level === 'expert') {
+      distractors = getExpertDistractors(t, poolCountries, 2);
+    } else {
+      distractors = poolCountries
+        .filter(c => c.code !== t.code)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 2);
+    }
 
     const shuffled = [t, ...distractors].sort(() => Math.random() - 0.5);
     setTarget(t);
     setOptions(shuffled);
 
     setTimeout(() => {
-      speak(`¿Qué bandera se esconde? ¡Rasca para descubrir!`);
-    }, 400);
-  }, [continentCountries, getRandomCountry, speak]);
+      if (!greetedRef.current) {
+        greetedRef.current = true;
+        speak(`${levelGreetings[level]} ¿Qué bandera se esconde? ¡Rasca para descubrir!`);
+      } else {
+        speak('¿Qué bandera se esconde? ¡Rasca para descubrir!');
+      }
+    }, 600);
+  }, [poolCountries, getRandomCountry, speak, level]);
 
-  useEffect(() => {
-    generateRound();
-  }, []);
+  useEffect(() => { generateRound(); }, []);
 
   useEffect(() => {
     if (target) {
@@ -124,7 +166,6 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
   const erase = useCallback((x: number, y: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -140,34 +181,24 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
   const checkRevealed = useCallback(() => {
     if (revealed || totalPixelsRef.current === 0) return;
     const ratio = pixelsClearedRef.current / totalPixelsRef.current;
-    if (ratio >= REVEAL_THRESHOLD) {
-      setRevealed(true);
-    }
+    if (ratio >= REVEAL_THRESHOLD) setRevealed(true);
   }, [revealed]);
 
   const handlePointerStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     e.preventDefault();
     isDrawingRef.current = true;
     const pos = getPos(e as unknown as TouchEvent | MouseEvent);
-    if (pos) {
-      erase(pos.x, pos.y);
-      checkRevealed();
-    }
+    if (pos) { erase(pos.x, pos.y); checkRevealed(); }
   }, [erase, checkRevealed]);
 
   const handlePointerMove = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     if (!isDrawingRef.current) return;
     e.preventDefault();
     const pos = getPos(e as unknown as TouchEvent | MouseEvent);
-    if (pos) {
-      erase(pos.x, pos.y);
-      checkRevealed();
-    }
+    if (pos) { erase(pos.x, pos.y); checkRevealed(); }
   }, [erase, checkRevealed]);
 
-  const handlePointerEnd = useCallback(() => {
-    isDrawingRef.current = false;
-  }, []);
+  const handlePointerEnd = useCallback(() => { isDrawingRef.current = false; }, []);
 
   const handleOption = useCallback((code: string) => {
     if (result || !target) return;
@@ -175,11 +206,8 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
       setResult('correct');
       setScore(s => s + 10);
       adjustWeight(target.code, true);
-      speak(`¡Correcto! Era ${target.name}`);
-      setTimeout(() => {
-        setRound(r => r + 1);
-        generateRound();
-      }, 2000);
+      speak(`🎉 ¡${target.name}!`);
+      setTimeout(() => { generateRound(); }, 2000);
     } else {
       setResult('incorrect');
       adjustWeight(target.code, false);
@@ -188,46 +216,29 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
   }, [result, target, adjustWeight, speak, generateRound]);
 
   const flagUrl = (code: string) => `${FLAG_BASE}/${code.toLowerCase()}.svg`;
+  const starCount = Math.min(Math.floor(score / 10), 5);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Volver">
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
-          <button
-            onClick={() => onFinish?.(score)}
-            className="px-3 py-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-sm font-medium text-gray-600"
-          >
-            🏁
-          </button>
+          <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md active:scale-95 transition-all text-3xl" aria-label="Atrás">⬅️</button>
+          <button onClick={() => onFinish?.(score)} className="px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all text-xl">🏁</button>
         </div>
-        <h1 className="text-xl md:text-2xl font-bold text-gray-800 flex-1 text-center">Rasca y Descubre</h1>
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-gray-500 font-medium">Ronda {round}</span>
-          <span className="text-amber-600 font-bold">{score} pts</span>
+        <div className="flex gap-1">
+          {Array.from({ length: starCount }).map((_, i) => (
+            <span key={i} className="text-2xl">⭐</span>
+          ))}
         </div>
       </header>
 
       <main className="max-w-md mx-auto">
-        <p className="text-center text-gray-600 mb-4">
-          {revealed ? '¿Qué bandera es?' : '¡Rasca con el dedo para descubrir!'}
-        </p>
-
         <div
           ref={containerRef}
           className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-gray-200 mb-6 touch-none select-none"
         >
           {target && (
-            <img
-              src={flagUrl(target.code)}
-              alt=""
-              className="absolute inset-0 w-full h-full object-contain p-4"
-              draggable={false}
-            />
+            <img src={flagUrl(target.code)} alt="" className="absolute inset-0 w-full h-full object-contain p-4" draggable={false} />
           )}
           <canvas
             ref={canvasRef}
@@ -254,18 +265,14 @@ export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoP
                   onClick={() => handleOption(country.code)}
                   disabled={result === 'correct'}
                   className={`
-                    relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all
-                    flex items-center justify-center p-2
-                    ${isCorrect
-                      ? 'border-green-400 bg-green-50 scale-105'
-                      : isWrong
-                        ? 'border-red-300 animate-shake'
-                        : 'border-transparent hover:border-amber-300 hover:shadow-lg active:scale-95 cursor-pointer'
-                    }
+                    relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all flex items-center justify-center p-2
+                    ${isCorrect ? 'border-green-400 bg-green-50 scale-105'
+                      : isWrong ? 'border-red-300 animate-shake'
+                      : 'border-transparent hover:border-amber-300 hover:shadow-lg active:scale-95 cursor-pointer'}
                   `}
                 >
                   <img src={flagUrl(country.code)} alt="" className="w-full h-full object-contain" />
-                  {isCorrect && <span className="absolute text-3xl">✅</span>}
+                  {isCorrect && <span className="absolute text-3xl">🎉</span>}
                 </button>
               );
             })}

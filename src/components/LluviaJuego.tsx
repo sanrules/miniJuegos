@@ -1,276 +1,274 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
+import { type Level, levelGreetings } from '../data/countries';
 import type { Country } from '../data/countries';
 
 interface LluviaJuegoProps {
-  continentCountries: Country[];
+  level: Level;
+  poolCountries: Country[];
   onBack: () => void;
   onFinish?: (score: number) => void;
 }
 
 const FLAG_BASE = 'https://flagcdn.com';
+const FALL_SPEED = 0.38;
+const FLAG_SIZE = 80;
+const SPAWN_INTERVAL = 2800;
 
 interface FallingFlag {
   id: number;
-  country: Country;
+  code: string;
   x: number;
   y: number;
-  speed: number;
-  isTarget: boolean;
-  caught: boolean;
 }
 
-const ROUND_DURATION = 20000;
-const SPAWN_INTERVAL = 1400;
-const FALL_SPEED = 0.15;
+function getExpertRandoms(target: Country, pool: Country[], count: number): Country[] {
+  const result: Country[] = [];
+  for (const code of target.similar) {
+    if (result.length >= count) break;
+    const found = pool.find(c => c.code === code);
+    if (found) result.push(found);
+  }
+  if (result.length < count) {
+    const sameColor = pool.filter(
+      c => c.code !== target.code && c.colorGroup === target.colorGroup && !result.some(r => r.code === c.code)
+    ).sort(() => Math.random() - 0.5);
+    for (const c of sameColor) {
+      if (result.length >= count) break;
+      result.push(c);
+    }
+  }
+  if (result.length < count) {
+    const random = pool.filter(
+      c => c.code !== target.code && !result.some(r => r.code === c.code)
+    ).sort(() => Math.random() - 0.5);
+    for (const c of random) {
+      if (result.length >= count) break;
+      result.push(c);
+    }
+  }
+  return result;
+}
 
-let flagIdCounter = 0;
-
-export function LluviaJuego({ continentCountries, onBack, onFinish }: LluviaJuegoProps) {
+export function LluviaJuego({ level, poolCountries, onBack, onFinish }: LluviaJuegoProps) {
   const { speak } = useSpeech();
-  const { adjustWeight, getRandomCountry } = useAdaptiveLearning(continentCountries);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const flagsRef = useRef<FallingFlag[]>([]);
-  const rafRef = useRef<number>(0);
-  const lastSpawnRef = useRef(0);
-  const roundStartRef = useRef(0);
-  const scoreRef = useRef(0);
+  const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
+  const lastTargetRef = useRef<string | null>(null);
+  const greetedRef = useRef(false);
 
   const [target, setTarget] = useState<Country | null>(null);
   const [flags, setFlags] = useState<FallingFlag[]>([]);
+  const [caught, setCaught] = useState<Set<string>>(new Set());
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(ROUND_DURATION);
-  const [playing, setPlaying] = useState(false);
-  const [round, setRound] = useState(1);
   const [gameOver, setGameOver] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const idCounterRef = useRef(0);
+  const activeTargetRef = useRef<string | null>(null);
+  const spokenTargetRef = useRef<string | null>(null);
 
-  const generateRound = useCallback(() => {
-    const t = getRandomCountry(continentCountries);
-    if (!t) return;
-
-    setTarget(t);
-    flagsRef.current = [];
-    setFlags([]);
-    setGameOver(false);
-    setPlaying(true);
-    roundStartRef.current = performance.now();
-    lastSpawnRef.current = 0;
-
-    speak(`¡Atrapa las banderas de ${t.name}!`);
-  }, [continentCountries, getRandomCountry, speak]);
+  const pickNewTarget = useCallback(() => {
+    const available = poolCountries.filter(c => c.code !== lastTargetRef.current);
+    const pool = available.length > 0 ? available : poolCountries;
+    const t = getRandomCountry(pool);
+    if (!t) return null;
+    lastTargetRef.current = t.code;
+    return t;
+  }, [poolCountries, getRandomCountry]);
 
   useEffect(() => {
-    generateRound();
+    const t = pickNewTarget();
+    if (!t) return;
+    setTarget(t);
+    activeTargetRef.current = t.code;
+    spokenTargetRef.current = null;
   }, []);
 
   useEffect(() => {
-    if (!playing || !target) return;
+    if (!target || spokenTargetRef.current === target.code) return;
+    spokenTargetRef.current = target.code;
 
-    const spawnFlag = () => {
-      const isTarget = Math.random() < 0.4;
-      let country: Country;
-
-      if (isTarget) {
-        country = target;
+    const delay = setTimeout(() => {
+      if (!greetedRef.current) {
+        greetedRef.current = true;
+        speak(`${levelGreetings[level]} ¡Atrapa las banderas de ${target.name}!`);
       } else {
-        const others = continentCountries.filter(c => c.code !== target.code);
-        country = others.length > 0
-          ? others[Math.floor(Math.random() * others.length)]
-          : target;
+        speak(`¡Atrapa las banderas de ${target.name}!`);
+      }
+    }, 700);
+    return () => clearTimeout(delay);
+  }, [target, speak, level]);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setGameOver(true);
+      setFlags([]);
+      return;
+    }
+    const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
+
+  useEffect(() => {
+    if (gameOver || !target) return;
+
+    const spawn = setInterval(() => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const codes = [target.code];
+      let randoms: Country[];
+      if (level === 'expert') {
+        randoms = getExpertRandoms(target, poolCountries, 2);
+      } else {
+        randoms = poolCountries
+          .filter(c => c.code !== target.code)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 2);
       }
 
-      const flag: FallingFlag = {
-        id: ++flagIdCounter,
-        country,
-        x: Math.random() * 80 + 10,
-        y: -15,
-        speed: FALL_SPEED + Math.random() * 0.08,
-        isTarget,
-        caught: false,
+      const pool = [...codes, ...randoms.map(c => c.code)].sort(() => Math.random() - 0.5);
+
+      const maxX = container.clientWidth - FLAG_SIZE;
+      const startX = Math.random() * maxX;
+
+      idCounterRef.current++;
+      const newFlag: FallingFlag = {
+        id: idCounterRef.current,
+        code: pool[Math.floor(Math.random() * pool.length)],
+        x: Math.max(0, startX),
+        y: -FLAG_SIZE,
       };
 
-      flagsRef.current = [...flagsRef.current, flag];
+      setFlags(prev => [...prev, newFlag]);
+    }, SPAWN_INTERVAL);
+
+    return () => clearInterval(spawn);
+  }, [gameOver, target, poolCountries, level]);
+
+  useEffect(() => {
+    if (gameOver) return;
+
+    let rafId: number;
+    const animate = () => {
+      setFlags(prev => {
+        const next = prev
+          .map(f => ({ ...f, y: f.y + FALL_SPEED }))
+          .filter(f => {
+            const container = containerRef.current;
+            return container ? f.y < container.clientHeight : true;
+          });
+        return next;
+      });
+      rafId = requestAnimationFrame(animate);
     };
-
-    const loop = (now: number) => {
-      if (!playing) return;
-
-      const elapsed = now - roundStartRef.current;
-      const remaining = Math.max(0, ROUND_DURATION - elapsed);
-      setTimeLeft(remaining);
-
-      if (remaining <= 0) {
-        setPlaying(false);
-        setGameOver(true);
-        onFinish?.(scoreRef.current);
-        return;
-      }
-
-      if (now - lastSpawnRef.current > SPAWN_INTERVAL) {
-        lastSpawnRef.current = now;
-        if (flagsRef.current.length < 10) {
-          spawnFlag();
-        }
-      }
-
-      flagsRef.current = flagsRef.current
-        .map(f => ({ ...f, y: f.y + f.speed }))
-        .filter(f => f.y < 110 && !f.caught);
-
-      setFlags([...flagsRef.current]);
-      rafRef.current = requestAnimationFrame(loop);
-    };
-
-    lastSpawnRef.current = performance.now();
-    rafRef.current = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, [playing, target, continentCountries]);
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [gameOver]);
 
   const handleTap = useCallback((flag: FallingFlag) => {
-    if (flag.caught || !playing) return;
+    if (gameOver) return;
+    if (caught.has(`${flag.id}`)) return;
 
-    if (flag.isTarget) {
-      flag.caught = true;
-      setScore(s => { const n = s + 10; scoreRef.current = n; return n; });
-      adjustWeight(flag.country.code, true);
-      speak(`¡${flag.country.name}!`);
+    const isCorrect = flag.code === activeTargetRef.current;
+    if (isCorrect) {
+      setCaught(prev => new Set(prev).add(`${flag.id}`));
+      setScore(s => s + 10);
+      adjustWeight(flag.code, true);
+
+      setFlags(prev => prev.filter(f => f.id !== flag.id));
+
+      const newTarget = pickNewTarget();
+      if (newTarget) {
+        setTarget(newTarget);
+        activeTargetRef.current = newTarget.code;
+        spokenTargetRef.current = null;
+
+        setTimeout(() => {
+          speak(`¡Ahora atrapa las de ${newTarget.name}!`);
+        }, 1000);
+      }
     } else {
-      flagsRef.current = flagsRef.current.map(f =>
-        f.id === flag.id ? { ...f, caught: false } : f
-      );
-      adjustWeight(target!.code, false);
+      adjustWeight(activeTargetRef.current!, false);
     }
-  }, [playing, adjustWeight, speak, target]);
-
-  const playAgain = () => {
-    setScore(0);
-    scoreRef.current = 0;
-    setRound(r => r + 1);
-    generateRound();
-  };
+  }, [gameOver, caught, adjustWeight, pickNewTarget, speak]);
 
   const flagUrl = (code: string) => `${FLAG_BASE}/${code.toLowerCase()}.svg`;
+  const starCount = Math.min(Math.floor(score / 10), 5);
 
-  const formatTime = (ms: number) => Math.ceil(ms / 1000);
+  if (poolCountries.length < 3) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="text-6xl">😕</span>
+      </div>
+    );
+  }
+
+  if (gameOver) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-bounce-in">
+          <span className="text-7xl block mb-4">🎉</span>
+          <div className="flex gap-2 justify-center mb-6">
+            {Array.from({ length: starCount }).map((_, i) => (
+              <span key={i} className="text-3xl">⭐</span>
+            ))}
+          </div>
+          <button onClick={onBack} className="px-8 py-3 bg-blue-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-blue-600 active:scale-95 transition-all">⬅️</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-cyan-50 py-4 px-4 overflow-hidden">
-      <header className="max-w-3xl mx-auto mb-2 flex items-center justify-between relative z-10">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 py-6 px-4 overflow-hidden">
+      <header className="max-w-3xl mx-auto mb-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
-          <button onClick={onBack} className="p-2 bg-white/80 rounded-xl shadow-md" aria-label="Volver">
-            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
-          <button
-            onClick={() => onFinish?.(score)}
-            className="px-3 py-2 bg-white/80 rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-sm font-medium text-gray-600"
-          >
-            🏁
-          </button>
+          <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md active:scale-95 transition-all text-3xl" aria-label="Atrás">⬅️</button>
+          <button onClick={() => onFinish?.(score)} className="px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all text-xl">🏁</button>
         </div>
-        <h1 className="text-lg md:text-xl font-bold text-gray-800 flex-1 text-center">Lluvia de Banderas</h1>
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-gray-500 font-medium">Ronda {round}</span>
-          <span className="text-cyan-600 font-bold">{score} pts</span>
+        <div className="flex gap-1">
+          {Array.from({ length: starCount }).map((_, i) => (
+            <span key={i} className="text-2xl">⭐</span>
+          ))}
+        </div>
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 py-2 shadow-md">
+          <span className="text-2xl">⏱️</span>
+          <span className="text-xl font-bold text-gray-700 ml-1">{timeLeft}</span>
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto relative">
-        {target && (
-          <div className="text-center mb-2 relative z-10">
-            <p className="text-base md:text-lg font-bold text-gray-700">
-              ¡Atrapa: <span className="text-cyan-600">{target.name}</span>!
-            </p>
-            <div className="mt-1">
-              <div className="w-full bg-gray-200 rounded-full h-2 max-w-xs mx-auto">
-                <div
-                  className="bg-cyan-500 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${(timeLeft / ROUND_DURATION) * 100}%` }}
-                />
-              </div>
-              <span className="text-xs text-gray-500">{formatTime(timeLeft)}s</span>
-            </div>
-          </div>
-        )}
-
-        <div
-          ref={containerRef}
-          className="relative w-full h-[70vh] bg-gradient-to-b from-sky-100 to-white rounded-2xl shadow-inner overflow-hidden touch-none select-none"
-        >
-          {target && (
-            <div className="absolute top-2 right-2 z-20 bg-white/80 px-3 py-1 rounded-full text-sm shadow">
-              🎯 {target.name}
-            </div>
-          )}
-
-          {flags.map(flag => (
-            <button
-              key={flag.id}
-              onClick={() => handleTap(flag)}
-              className="absolute w-[18%] aspect-[4/3] transition-opacity duration-200 cursor-pointer"
-              style={{
-                left: `${flag.x}%`,
-                top: `${flag.y}%`,
-                opacity: flag.caught ? 0 : 1,
-                pointerEvents: flag.caught ? 'none' : 'auto',
-                willChange: 'transform',
-              }}
-              aria-label={flag.country.name}
-            >
-              <img
-                src={flagUrl(flag.country.code)}
-                alt=""
-                className="w-full h-full object-contain drop-shadow-md pointer-events-none"
-                draggable={false}
-              />
-            </button>
-          ))}
-
-          {!playing && !gameOver && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <p className="text-xl font-bold text-white drop-shadow-lg">Preparando...</p>
-            </div>
-          )}
+      {target && (
+        <div className="text-center mb-2">
+          <span className="text-lg text-gray-500">🎯</span>
         </div>
+      )}
 
-        <div className="mt-3 text-center">
+      <main
+        ref={containerRef}
+        className="relative max-w-md mx-auto h-[65vh] bg-gradient-to-b from-blue-100/50 to-transparent rounded-3xl overflow-hidden border-2 border-blue-100 touch-none select-none"
+      >
+        {flags.map(flag => (
           <button
-            onClick={() => target && speak(`¡Atrapa las banderas de ${target.name}!`)}
-            className="px-4 py-2 bg-white rounded-full shadow-md text-sm font-medium hover:shadow-lg active:scale-95 transition-all"
-            disabled={!target}
+            key={flag.id}
+            onClick={() => handleTap(flag)}
+            className="absolute transition-opacity duration-200 active:scale-110"
+            style={{
+              left: flag.x,
+              top: flag.y,
+              width: FLAG_SIZE,
+              height: FLAG_SIZE,
+            }}
           >
-            <span className="mr-1">🔊</span> Repetir
+            <img
+              src={flagUrl(flag.code)}
+              alt=""
+              className="w-full h-full object-contain drop-shadow-md rounded-lg bg-white/80 p-1"
+              draggable={false}
+            />
           </button>
-        </div>
-
-        {gameOver && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
-            <div className="bg-white rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full animate-bounce-in">
-              <span className="text-7xl block mb-4">⏰</span>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Tiempo terminado!</h2>
-              <p className="text-4xl font-bold text-cyan-600 mb-2">{score} pts</p>
-              <p className="text-gray-500 mb-6">Has atrapado {Math.round(score / 10)} banderas</p>
-              <button
-                onClick={playAgain}
-                className="px-8 py-3 bg-cyan-500 text-white rounded-full text-lg font-semibold shadow-lg hover:bg-cyan-600 active:scale-95 transition-all"
-              >
-                Jugar de nuevo
-              </button>
-              <button
-                onClick={onBack}
-                className="block mx-auto mt-3 text-gray-500 hover:text-gray-700 underline text-sm"
-              >
-                Volver al menú
-              </button>
-            </div>
-          </div>
-        )}
+        ))}
       </main>
     </div>
   );

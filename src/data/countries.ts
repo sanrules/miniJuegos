@@ -89,6 +89,36 @@ export const continentAnimals: Record<Continent, string> = {
   OC: '🦘',
 };
 
+export type Level = 'explorer' | 'continents' | 'world' | 'expert';
+
+export const levelNames: Record<Level, string> = {
+  explorer: 'Explorador',
+  continents: 'Continentes',
+  world: 'Mundial',
+  expert: 'Experto',
+};
+
+export const levelEmojis: Record<Level, string> = {
+  explorer: '🧭',
+  continents: '🗺️',
+  world: '🌍',
+  expert: '👑',
+};
+
+export const levelGreetings: Record<Level, string> = {
+  explorer: '¡Nivel Explorador, banderas fáciles!',
+  continents: '¡Nivel Continente, elige dónde viajar!',
+  world: '¡Nivel Mundial, todas mezcladas!',
+  expert: '¡Nivel Súper Experto, cuidado con las trampas!',
+};
+
+export const levelBackgrounds: Record<Level, string> = {
+  explorer: 'from-green-300 via-green-200 to-emerald-300',
+  continents: 'from-blue-300 via-blue-200 to-cyan-300',
+  world: 'from-purple-300 via-purple-200 to-violet-300',
+  expert: 'from-red-300 via-red-200 to-rose-300',
+};
+
 export const continentColors: Record<Continent, string> = {
   EU: 'from-blue-400 to-blue-600',
   AS: 'from-red-400 to-red-600',
