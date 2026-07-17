@@ -1,0 +1,186 @@
+[
+  {
+    "code": "ES",
+    "name": "España",
+    "continent": "EU",
+    "difficulty": 1,
+    "colorGroup": "red-yellow",
+    "similar": ["AD", "RO", "MD"]
+  },
+  {
+    "code": "FR",
+    "name": "Francia",
+    "continent": "EU",
+    "difficulty": 1,
+    "colorGroup": "blue-white-red",
+    "similar": ["NL", "LU", "RS"]
+  },
+  {
+    "code": "DE",
+    "name": "Alemania",
+    "continent": "EU",
+    "difficulty": 1,
+    "colorGroup": "black-red-gold",
+    "similar": ["BE", "BE", "BE"]
+  },
+  {
+    "code": "IT",
+    "name": "Italia",
+    "continent": "EU",
+    "difficulty": 1,
+    "colorGroup": "green-white-red",
+    "similar": ["MX", "IE", "CI"]
+  },
+  {
+    "code": "GB",
+    "name": "Reino Unido",
+    "continent": "EU",
+    "difficulty": 1,
+    "colorGroup": "blue-white-red",
+    "similar": ["AU", "NZ", "FI"]
+  },
+  {
+    "code": "JP",
+    "name": "Japón",
+    "continent": "AS",
+    "difficulty": 1,
+    "colorGroup": "white-red",
+    "similar": ["BD", "PL", "TG"]
+  },
+  {
+    "code": "CN",
+    "name": "China",
+    "continent": "AS",
+    "difficulty": 1,
+    "colorGroup": "red-yellow",
+    "similar": ["VN", "SG", "CN"]
+  },
+  {
+    "code": "IN",
+    "name": "India",
+    "continent": "AS",
+    "difficulty": 1,
+    "colorGroup": "orange-white-green",
+    "similar": ["NE", "NI", "CI"]
+  },
+  {
+    "code": "KR",
+    "name": "Corea del Sur",
+    "continent": "AS",
+    "difficulty": 2,
+    "colorGroup": "white-red-blue",
+    "similar": ["KP", "JP", "TH"]
+  },
+  {
+    "code": "SA",
+    "name": "Arabia Saudita",
+    "continent": "AS",
+    "difficulty": 2,
+    "colorGroup": "green-white",
+    "similar": ["PK", "SA", "LY"]
+  },
+  {
+    "code": "ZA",
+    "name": "Sudáfrica",
+    "continent": "AF",
+    "difficulty": 2,
+    "colorGroup": "green-yellow-black",
+    "similar": ["MW", "ZW", "ZM"]
+  },
+  {
+    "code": "EG",
+    "name": "Egipto",
+    "continent": "AF",
+    "difficulty": 2,
+    "colorGroup": "red-white-black",
+    "similar": ["YE", "SY", "IQ"]
+  },
+  {
+    "code": "NG",
+    "name": "Nigeria",
+    "continent": "AF",
+    "difficulty": 2,
+    "colorGroup": "green-white",
+    "similar": ["GN", "CI", "BF"]
+  },
+  {
+    "code": "KE",
+    "name": "Kenia",
+    "continent": "AF",
+    "difficulty": 2,
+    "colorGroup": "black-red-green",
+    "similar": ["SS", "MW", "UG"]
+  },
+  {
+    "code": "MA",
+    "name": "Marruecos",
+    "continent": "AF",
+    "difficulty": 2,
+    "colorGroup": "red-green",
+    "similar": ["DZ", "MR", "TN"]
+  },
+  {
+    "code": "US",
+    "name": "Estados Unidos",
+    "continent": "AM",
+    "difficulty": 1,
+    "colorGroup": "red-white-blue",
+    "similar": ["CL", "CU", "PR"]
+  },
+  {
+    "code": "BR",
+    "name": "Brasil",
+    "continent": "AM",
+    "difficulty": 1,
+    "colorGroup": "green-yellow-blue",
+    "similar": ["BW", "GH", "ST"]
+  },
+  {
+    "code": "AR",
+    "name": "Argentina",
+    "continent": "AM",
+    "difficulty": 1,
+    "colorGroup": "blue-white",
+    "similar": ["UY", "HN", "NI"]
+  },
+  {
+    "code": "MX",
+    "name": "México",
+    "continent": "AM",
+    "difficulty": 1,
+    "colorGroup": "green-white-red",
+    "similar": ["IT", "IE", "CI"]
+  },
+  {
+    "code": "CA",
+    "name": "Canadá",
+    "continent": "AM",
+    "difficulty": 1,
+    "colorGroup": "red-white",
+    "similar": ["JP", "PL", "PE"]
+  },
+  {
+    "code": "AU",
+    "name": "Australia",
+    "continent": "OC",
+    "difficulty": 1,
+    "colorGroup": "blue-white-red",
+    "similar": ["GB", "NZ", "FI"]
+  },
+  {
+    "code": "NZ",
+    "name": "Nueva Zelanda",
+    "continent": "OC",
+    "difficulty": 2,
+    "colorGroup": "blue-white-red",
+    "similar": ["AU", "GB", "FI"]
+  },
+  {
+    "code": "FJ",
+    "name": "Fiyi",
+    "continent": "OC",
+    "difficulty": 3,
+    "colorGroup": "blue-white-red",
+    "similar": ["AU", "NZ", "GB"]
+  }
+]

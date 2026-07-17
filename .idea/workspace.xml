@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AIDiffSettings">
+    <option name="showAIDiff" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Fase2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/cambiosFase1y2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/fase1.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;scerrom&quot;
+  }
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1784270795" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="46c94630-6d56-4686-ae82-9072583d92be" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sanrules/miniJuegos.git&quot;,
+    &quot;accountId&quot;: &quot;46c94630-6d56-4686-ae82-9072583d92be&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.024181669415896" />
+      <entry key="MS500" value="1.5880381076147292" />
+      <entry key="S2" value="4.149506039960459" />
+      <entry key="S5" value="9.124795733938395" />
+      <entry key="S10" value="16.046968198217257" />
+      <entry key="S30" value="29.9462348347629" />
+      <entry key="S60" value="36.71559075870696" />
+      <entry key="M2" value="41.383929546790256" />
+      <entry key="M5" value="47.774232167337075" />
+      <entry key="M10" value="55.12651053780323" />
+      <entry key="M15" value="60.48960809907727" />
+      <entry key="M30" value="69.586925223198" />
+      <entry key="H1" value="76.54062091793404" />
+      <entry key="H2" value="80.90017775069435" />
+      <entry key="H4" value="83.34925201198308" />
+      <entry key="D1" value="85.54343510370433" />
+      <entry key="W1" value="85.93440416087344" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="3.679479899918658E-146" />
+      <entry key="S5" value="6.703700048808243E-59" />
+      <entry key="S10" value="8.18761262445179E-30" />
+      <entry key="S30" value="2.015513736216606E-10" />
+      <entry key="S60" value="1.419687900989721E-5" />
+      <entry key="M2" value="0.003767874601137517" />
+      <entry key="M5" value="0.10726019353126735" />
+      <entry key="M10" value="0.3275060206030836" />
+      <entry key="M15" value="0.4751304439989156" />
+      <entry key="M30" value="0.6892970651315113" />
+      <entry key="H1" value="0.8302391614056231" />
+      <entry key="H2" value="0.9111746053340282" />
+      <entry key="H4" value="0.9545546633556565" />
+      <entry key="D1" value="0.9922782391021201" />
+      <entry key="W1" value="0.9988932232069562" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9960129068803423" />
+      <entry key="MS500" value="1.578535907375158" />
+      <entry key="S2" value="4.14262008286177" />
+      <entry key="S5" value="9.118665600771212" />
+      <entry key="S10" value="16.041723640538386" />
+      <entry key="S30" value="29.94308659707014" />
+      <entry key="S60" value="36.713694424390205" />
+      <entry key="M2" value="41.38657692201999" />
+      <entry key="M5" value="47.88042671281969" />
+      <entry key="M10" value="55.45282323430122" />
+      <entry key="M15" value="60.963633176439885" />
+      <entry key="M30" value="70.27543483215474" />
+      <entry key="H1" value="77.37038600868438" />
+      <entry key="H2" value="81.81109171748018" />
+      <entry key="H4" value="84.30366995177704" />
+      <entry key="D1" value="86.53568961997114" />
+      <entry key="W1" value="86.93329397156688" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3GcV4EjqbC52Y56KyaExTNRHDoD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/slimbook/Documents/HRCOMMS/esencial-frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "/home/slimbook/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="" />
+      <created>1784270650696</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1784270650696</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

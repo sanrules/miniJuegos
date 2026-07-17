@@ -1,0 +1,1 @@
+- Eliminar el doble toque en el menú -> no es cómodo y no es usable. Tocamos, leemos en voz alta y entramos. En PC (con ratón) si pasamos el cursor por arriba lee el nombre.
