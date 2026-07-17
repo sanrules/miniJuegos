@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Country } from '../types/country';
+import type { Country } from '../data/countries';
 
 const STORAGE_KEY = 'flags-adaptive-weights';
 const INITIAL_WEIGHT = 10;

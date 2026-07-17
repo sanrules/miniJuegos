@@ -7,14 +7,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Correcciones + buenas prácticas">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/cambios.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/cambios.md" afterDir="false" />
+    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Fase 7">
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GameSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/countries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/countries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useAdaptiveLearning.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useAdaptiveLearning.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/country.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,61 +65,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0239054417145785" />
-      <entry key="MS500" value="1.6996585229770456" />
-      <entry key="S2" value="4.500633267826039" />
-      <entry key="S5" value="9.866611172603706" />
-      <entry key="S10" value="18.11715727583849" />
-      <entry key="S30" value="43.27184511365814" />
-      <entry key="S60" value="62.478120700842425" />
-      <entry key="M2" value="78.11399018437393" />
-      <entry key="M5" value="94.80577477128158" />
-      <entry key="M10" value="116.5430945480637" />
-      <entry key="M15" value="142.45190836731737" />
-      <entry key="M30" value="220.13017063896868" />
-      <entry key="H1" value="321.23625217031804" />
-      <entry key="H2" value="409.31132992681427" />
-      <entry key="H4" value="468.714968366317" />
-      <entry key="D1" value="528.6756268863796" />
-      <entry key="W1" value="540.0671712007598" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0001098635168204" />
+      <entry key="S2" value="1.1023795872324784" />
+      <entry key="S5" value="1.4018697805287412" />
+      <entry key="S10" value="1.6339320003471367" />
+      <entry key="S30" value="1.8714022366526897" />
+      <entry key="S60" value="2.9827981471897416" />
+      <entry key="M2" value="12.117897192699484" />
+      <entry key="M5" value="43.904617564013925" />
+      <entry key="M10" value="79.48824059130948" />
+      <entry key="M15" value="110.51984571417792" />
+      <entry key="M30" value="194.13408210364793" />
+      <entry key="H1" value="302.1152039425615" />
+      <entry key="H2" value="397.6268066914594" />
+      <entry key="H4" value="462.81312911824597" />
+      <entry key="D1" value="529.179643485464" />
+      <entry key="W1" value="541.8485893257026" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
-      <entry key="S10" value="1.5480650804729908E-191" />
-      <entry key="S30" value="2.4922775462978735E-64" />
-      <entry key="S60" value="1.5786948870183324E-32" />
-      <entry key="M2" value="1.256461255677363E-16" />
-      <entry key="M5" value="4.36173865851735E-7" />
-      <entry key="M10" value="6.604346037661343E-4" />
-      <entry key="M15" value="0.007583794334544249" />
-      <entry key="M30" value="0.08708498340439699" />
-      <entry key="H1" value="0.2951016492742751" />
-      <entry key="H2" value="0.5432325922422815" />
-      <entry key="H4" value="0.7370431413711774" />
-      <entry key="D1" value="0.950419820829839" />
-      <entry key="W1" value="0.9927618261983692" />
+      <entry key="S10" value="3.608189642970738E-202" />
+      <entry key="S30" value="7.1191769099199E-68" />
+      <entry key="S60" value="2.668178575343068E-34" />
+      <entry key="M2" value="1.6334560218576665E-17" />
+      <entry key="M5" value="1.9286036240836333E-7" />
+      <entry key="M10" value="4.3915869843185563E-4" />
+      <entry key="M15" value="0.005777602506677757" />
+      <entry key="M30" value="0.07601054207593605" />
+      <entry key="H1" value="0.27570009444310367" />
+      <entry key="H2" value="0.5250715136465679" />
+      <entry key="H4" value="0.7246181847335736" />
+      <entry key="D1" value="0.9477305307163182" />
+      <entry key="W1" value="0.9923600386596964" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.0026708991634525" />
-      <entry key="MS500" value="1.6909792626672282" />
-      <entry key="S2" value="4.493478284004836" />
-      <entry key="S5" value="9.859869683210643" />
-      <entry key="S10" value="18.11088562832764" />
-      <entry key="S30" value="43.2671010079597" />
-      <entry key="S60" value="62.474789615902296" />
-      <entry key="M2" value="78.11193300146455" />
-      <entry key="M5" value="94.80448723721913" />
-      <entry key="M10" value="116.54197678079602" />
-      <entry key="M15" value="142.4570741322316" />
-      <entry key="M30" value="220.21405687779503" />
-      <entry key="H1" value="321.5284846485657" />
-      <entry key="H2" value="409.85259365981545" />
-      <entry key="H4" value="469.4508510720557" />
-      <entry key="D1" value="529.6258241734165" />
-      <entry key="W1" value="541.0599004529445" />
+      <entry key="MS100" value="2.485728947364511E-17" />
+      <entry key="MS500" value="5.865235431228432E-4" />
+      <entry key="S2" value="0.24999579109155318" />
+      <entry key="S5" value="0.8670185294345496" />
+      <entry key="S10" value="1.31593146495934" />
+      <entry key="S30" value="1.7516221718247722" />
+      <entry key="S60" value="2.9209421587212465" />
+      <entry key="M2" value="12.08623695397794" />
+      <entry key="M5" value="43.89137081223022" />
+      <entry key="M10" value="79.4811383755673" />
+      <entry key="M15" value="110.51953736767919" />
+      <entry key="M30" value="194.2051765184196" />
+      <entry key="H1" value="302.3871608550544" />
+      <entry key="H2" value="398.14944370373263" />
+      <entry key="H4" value="463.5363406624347" />
+      <entry key="D1" value="530.1271078125983" />
+      <entry key="W1" value="542.8409104749165" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -209,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784278365116</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fase 7">
+      <option name="closed" value="true" />
+      <created>1784279193435</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1784279193435</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +240,7 @@
     <MESSAGE value="Fase 6" />
     <MESSAGE value="Correcciones Fase 6" />
     <MESSAGE value="Correcciones + buenas prácticas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correcciones + buenas prácticas" />
+    <MESSAGE value="Fase 7" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fase 7" />
   </component>
 </project>

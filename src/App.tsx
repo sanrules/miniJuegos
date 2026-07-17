@@ -12,19 +12,21 @@ import { LluviaJuego } from './components/LluviaJuego';
 import { PuzleJuego } from './components/PuzleJuego';
 import { CucuJuego } from './components/CucuJuego';
 import { AnimalesJuego } from './components/AnimalesJuego';
+import { AtlasInteractivo } from './components/AtlasInteractivo';
 import { Celebration } from './components/Celebration';
 import { useSpeech } from './hooks/useSpeech';
 import { motion } from 'framer-motion';
 
 type Screen =
   | { type: 'welcome' }
+  | { type: 'atlas' }
   | { type: 'level' }
   | { type: 'map'; level: Level }
   | { type: 'gameSelection'; level: Level; continent: Continent | null }
   | { type: 'game'; level: Level; game: GameId; continent: Continent | null }
   | { type: 'celebration'; score: number; game: GameId; level: Level; continent: Continent | null };
 
-function WelcomeScreen({ onPlay }: { onPlay: () => void }) {
+function WelcomeScreen({ onPlay, onAtlas }: { onPlay: () => void; onAtlas: () => void }) {
   const { speak } = useSpeech();
 
   return (
@@ -34,8 +36,13 @@ function WelcomeScreen({ onPlay }: { onPlay: () => void }) {
         <p className="text-xl text-white/80 mb-10">¡Aprende banderas jugando!</p>
         <motion.button whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}
           onClick={(e) => { e.stopPropagation(); speak('¡A jugar!'); onPlay(); }}
-          className="inline-flex items-center gap-3 px-10 py-5 bg-green-400 hover:bg-green-300 text-white rounded-full text-3xl font-bold shadow-2xl hover:shadow-green-400/50 transition-all">
+          className="inline-flex items-center gap-3 px-10 py-5 bg-green-400 hover:bg-green-300 text-white rounded-full text-3xl font-bold shadow-2xl hover:shadow-green-400/50 transition-all mb-4">
           <span className="text-4xl">▶️</span><span>¡Jugar!</span>
+        </motion.button>
+        <motion.button whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}
+          onClick={(e) => { e.stopPropagation(); speak('🗺️ Atlas'); onAtlas(); }}
+          className="inline-flex items-center gap-3 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-white rounded-full text-2xl font-bold shadow-2xl hover:shadow-amber-400/50 transition-all">
+          <span className="text-3xl">🗺️</span><span>Atlas</span>
         </motion.button>
       </motion.div>
     </div>
@@ -53,7 +60,10 @@ export default function App() {
 
   switch (screen.type) {
     case 'welcome':
-      return <WelcomeScreen onPlay={() => setScreen({ type: 'level' })} />;
+      return <WelcomeScreen onPlay={() => setScreen({ type: 'level' })} onAtlas={() => setScreen({ type: 'atlas' })} />;
+
+    case 'atlas':
+      return <AtlasInteractivo onBack={() => setScreen({ type: 'welcome' })} />;
 
     case 'level':
       return (
