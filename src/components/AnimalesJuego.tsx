@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSpeech } from '../hooks/useSpeech';
-import { FLAG_BASE } from '../utils/game';
+import { FLAG_BASE, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 import { animals } from '../data/countries';
@@ -43,10 +43,11 @@ export function AnimalesJuego({ poolCountries, onBack, onFinish }: GameProps) {
 
   const handleSelect = useCallback((country: Country) => {
     if (result || !targetCode) return;
+    speak(country.name);
     if (country.code === targetCode) {
       setResult('correct');
       setScore(s => s + 10);
-      speak('🎉 ¡Muy bien!');
+      speak('¡Muy bien!');
       setTimeout(() => { generateRound(); }, 2200);
     } else {
       setResult('incorrect');
@@ -96,7 +97,7 @@ export function AnimalesJuego({ poolCountries, onBack, onFinish }: GameProps) {
               <button key={country.code} onClick={() => handleSelect(country)} disabled={!!result}
                 className={`relative aspect-[4/3] rounded-2xl bg-white shadow-lg border-[5px] transition-all flex items-center justify-center p-4
                   ${isCorrect ? 'border-green-400 bg-green-50 scale-105 shadow-xl' : isWrong ? 'border-red-300 bg-red-50 animate-shake' : 'border-transparent hover:border-pink-300 hover:shadow-xl active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain" draggable={false} />
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" draggable={false} />
               </button>
             );
           })}

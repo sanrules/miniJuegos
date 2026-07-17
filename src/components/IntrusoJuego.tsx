@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
 import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE } from '../utils/game';
+import { FLAG_BASE, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 
@@ -68,7 +68,7 @@ export function IntrusoJuego({ level, poolCountries, onBack, onFinish }: GamePro
       setScore(s => s + 10);
       adjustWeight(country.code, true);
       cards.filter(c => c.code !== intruderCode).forEach(c => adjustWeight(c.code, false));
-      speak('🎉 ¡Esa es la diferente!');
+      speak('¡Muy bien! ¡Esa es la diferente!');
       setTimeout(() => { generateRound(); }, 2200);
     } else {
       setShakingCode(country.code);
@@ -104,7 +104,7 @@ export function IntrusoJuego({ level, poolCountries, onBack, onFinish }: GamePro
                 className={`relative aspect-[4/3] rounded-2xl bg-white shadow-lg border-[5px] transition-all flex items-center justify-center p-3
                   ${isCorrect ? 'border-green-400 bg-green-50 scale-105 shadow-xl' : isWrong ? 'border-red-300 bg-red-50 animate-shake'
                     : 'border-transparent hover:border-rose-300 hover:shadow-xl active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain" />
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
                 {isCorrect && <span className="absolute text-5xl drop-shadow-lg animate-bounce">🎉</span>}
                 {isWrong && <span className="absolute text-3xl opacity-70">❌</span>}
               </button>

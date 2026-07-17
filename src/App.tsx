@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { countries, type Level, type Continent, type Country } from './data/countries';
 import { LevelSelection } from './components/LevelSelection';
 import { MapSelection } from './components/MapSelection';
@@ -8,9 +8,7 @@ import { AdivinaJuego } from './components/AdivinaJuego';
 import { ParejasJuego } from './components/ParejasJuego';
 import { RascaJuego } from './components/RascaJuego';
 import { IntrusoJuego } from './components/IntrusoJuego';
-import { LluviaJuego } from './components/LluviaJuego';
 import { PuzleJuego } from './components/PuzleJuego';
-import { CucuJuego } from './components/CucuJuego';
 import { AnimalesJuego } from './components/AnimalesJuego';
 import { AtlasInteractivo } from './components/AtlasInteractivo';
 import { Celebration } from './components/Celebration';
@@ -57,39 +55,46 @@ function getPool(level: Level, continent: Continent | null): Country[] {
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>({ type: 'welcome' });
+  const navigateRef = useRef(false);
+  const navigate = useCallback((s: Screen) => {
+    if (navigateRef.current) return;
+    navigateRef.current = true;
+    setScreen(s);
+    setTimeout(() => { navigateRef.current = false; }, 400);
+  }, []);
 
   switch (screen.type) {
     case 'welcome':
-      return <WelcomeScreen onPlay={() => setScreen({ type: 'level' })} onAtlas={() => setScreen({ type: 'atlas' })} />;
+      return <WelcomeScreen onPlay={() => navigate({ type: 'level' })} onAtlas={() => navigate({ type: 'atlas' })} />;
 
     case 'atlas':
-      return <AtlasInteractivo onBack={() => setScreen({ type: 'welcome' })} />;
+      return <AtlasInteractivo onBack={() => navigate({ type: 'welcome' })} />;
 
     case 'level':
       return (
         <LevelSelection onSelect={(level) => {
-          if (level === 'continents') setScreen({ type: 'map', level });
-          else setScreen({ type: 'gameSelection', level, continent: null });
+          if (level === 'continents') navigate({ type: 'map', level });
+          else navigate({ type: 'gameSelection', level, continent: null });
         }} />
       );
 
     case 'map':
       return (
-        <MapSelection onSelectContinent={(continent) => setScreen({ type: 'gameSelection', level: screen.level, continent })}
-          onBack={() => setScreen({ type: 'level' })} />
+        <MapSelection onSelectContinent={(continent) => navigate({ type: 'gameSelection', level: screen.level, continent })}
+          onBack={() => navigate({ type: 'level' })} />
       );
 
     case 'gameSelection':
       return (
         <GameSelection level={screen.level} continent={screen.continent}
-          onSelectGame={(game) => setScreen({ type: 'game', level: screen.level, game, continent: screen.continent })}
-          onBack={() => setScreen({ type: 'level' })} />
+          onSelectGame={(game) => navigate({ type: 'game', level: screen.level, game, continent: screen.continent })}
+          onBack={() => navigate({ type: 'level' })} />
       );
 
     case 'game': {
       const pool = getPool(screen.level, screen.continent);
-      const back = () => setScreen({ type: 'gameSelection', level: screen.level, continent: screen.continent });
-      const finish = (score: number) => setScreen({ type: 'celebration', score, game: screen.game, level: screen.level, continent: screen.continent });
+      const back = () => navigate({ type: 'gameSelection', level: screen.level, continent: screen.continent });
+      const finish = (score: number) => navigate({ type: 'celebration', score, game: screen.game, level: screen.level, continent: screen.continent });
       const shared = { level: screen.level, poolCountries: pool, onBack: back, onFinish: finish };
 
       switch (screen.game) {
@@ -97,9 +102,7 @@ export default function App() {
         case 'parejas': return <ParejasJuego {...shared} />;
         case 'rasca': return <RascaJuego {...shared} />;
         case 'intruso': return <IntrusoJuego {...shared} />;
-        case 'lluvia': return <LluviaJuego {...shared} />;
         case 'puzle': return <PuzleJuego {...shared} />;
-        case 'cucu': return <CucuJuego {...shared} />;
         case 'animales': return <AnimalesJuego {...shared} />;
       }
       return null;
@@ -108,7 +111,7 @@ export default function App() {
     case 'celebration':
       return (
         <Celebration score={screen.score}
-          onContinue={() => setScreen({ type: 'gameSelection', level: screen.level, continent: screen.continent })} />
+          onContinue={() => navigate({ type: 'gameSelection', level: screen.level, continent: screen.continent })} />
       );
   }
 }

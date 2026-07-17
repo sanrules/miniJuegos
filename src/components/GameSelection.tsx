@@ -1,6 +1,7 @@
 import type { Continent, Level } from '../data/countries';
-import { continentNames, continentAnimals, levelEmojis, levelNames } from '../data/countries';
-export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'lluvia' | 'puzle' | 'cucu' | 'animales';
+import { continentAnimals, continentNames, levelEmojis, levelNames } from '../data/countries';
+
+export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'puzle' | 'animales';
 
 interface GameSelectionProps {
   level: Level;
@@ -14,9 +15,7 @@ const gameNames: Record<GameId, string> = {
   parejas: 'Parejas',
   rasca: 'Rasca',
   intruso: 'Intruso',
-  lluvia: 'Lluvia',
   puzle: 'Puzle',
-  cucu: 'Cucú',
   animales: 'Animales',
 };
 
@@ -25,9 +24,7 @@ const games: { id: GameId; icon: string; color: string }[] = [
   { id: 'parejas', icon: '🃏', color: 'hover:border-green-200 focus:ring-green-300' },
   { id: 'rasca', icon: '✋', color: 'hover:border-amber-200 focus:ring-amber-300' },
   { id: 'intruso', icon: '🕵️', color: 'hover:border-rose-200 focus:ring-rose-300' },
-  { id: 'lluvia', icon: '🌧️', color: 'hover:border-cyan-200 focus:ring-cyan-300' },
   { id: 'puzle', icon: '🧩', color: 'hover:border-teal-200 focus:ring-teal-300' },
-  { id: 'cucu', icon: '🌳', color: 'hover:border-emerald-200 focus:ring-emerald-300' },
   { id: 'animales', icon: '🐼', color: 'hover:border-pink-200 focus:ring-pink-300' },
 ];
 
@@ -35,7 +32,9 @@ export function GameSelection({ level, continent, onSelectGame, onBack }: GameSe
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-6 flex items-center">
-        <button onClick={onBack} className="flex items-center gap-1.5 p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Atrás"><span className="text-2xl">⬅️</span><span className="text-sm font-bold text-gray-600">Atrás</span></button>
+        <button onClick={onBack}
+          className="flex items-center gap-1.5 p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all"
+          aria-label="Atrás"><span className="text-2xl">⬅️</span><span className="text-sm font-bold text-gray-600">Atrás</span></button>
         <h1 className="text-2xl font-bold text-gray-800 flex-1 text-center">
           <span className="mr-2">{levelEmojis[level]}</span>
           {levelNames[level]}

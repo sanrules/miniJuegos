@@ -1,13 +1,16 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
 import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, getExpertDistractors } from '../utils/game';
+import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 
-const BRUSH_RADIUS = 28;
-const REVEAL_THRESHOLD = 0.55;
+const GRID_COLS = 4;
+const GRID_ROWS = 3;
+const TOTAL_BLOCKS = GRID_COLS * GRID_ROWS;
+const AUTO_REVEAL_THRESHOLD = Math.floor(TOTAL_BLOCKS * 0.7);
 
 export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
@@ -15,55 +18,12 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
   const lastCodeRef = useRef<string | null>(null);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isDrawingRef = useRef(false);
-  const pixelsClearedRef = useRef(0);
-  const totalPixelsRef = useRef(0);
-
   const [target, setTarget] = useState<Country | null>(null);
   const [options, setOptions] = useState<Country[]>([]);
   const [revealed, setRevealed] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
-
-  const initCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const rect = container.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = `${w}px`;
-    canvas.style.height = `${h}px`;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.scale(dpr, dpr);
-    const gradient = ctx.createLinearGradient(0, 0, w, h);
-    gradient.addColorStop(0, '#9CA3AF');
-    gradient.addColorStop(0.5, '#6B7280');
-    gradient.addColorStop(1, '#9CA3AF');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, w, h);
-
-    ctx.fillStyle = '#FBBF24';
-    ctx.font = `bold ${Math.min(w, h) * 0.12}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('✋ ¡Rasca aquí!', w / 2, h / 2);
-
-    totalPixelsRef.current = w * h;
-    pixelsClearedRef.current = 0;
-    setRevealed(false);
-    setResult(null);
-  }, []);
+  const [clearedBlocks, setClearedBlocks] = useState<Set<number>>(new Set());
 
   const generateRound = useCallback(() => {
     const available = poolCountries.filter(c => c.code !== lastCodeRef.current);
@@ -77,92 +37,32 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
 
     setTarget(t);
     setOptions([t, ...distractors].sort(() => Math.random() - 0.5));
-    setTimeout(() => greet('¿Qué bandera se esconde? ¡Rasca para descubrir!'), 600);
+    setRevealed(false);
+    setResult(null);
+    setClearedBlocks(new Set());
+    setTimeout(() => greet('¿Qué bandera se esconde? ¡Toca los bloques para descubrir!'), 600);
   }, [poolCountries, getRandomCountry, greet, level]);
 
   useEffect(() => { generateRound(); }, []);
 
-  useEffect(() => {
-    if (target) {
-      const id = setTimeout(initCanvas, 100);
-      return () => clearTimeout(id);
+  const handleBlockTap = useCallback((index: number) => {
+    if (revealed || result) return;
+    const next = new Set(clearedBlocks);
+    next.add(index);
+    setClearedBlocks(next);
+    if (next.size >= AUTO_REVEAL_THRESHOLD) {
+      setRevealed(true);
     }
-  }, [target, initCanvas]);
+  }, [clearedBlocks, revealed, result]);
 
-  const getPos = (e: React.TouchEvent | React.MouseEvent | TouchEvent | MouseEvent) => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return null;
-    const rect = container.getBoundingClientRect();
-    let clientX: number, clientY: number;
-    if ('touches' in e) {
-      const touch = e.touches[0] || (e as TouchEvent).changedTouches[0];
-      if (!touch) return null;
-      clientX = touch.clientX; clientY = touch.clientY;
-    } else {
-      clientX = (e as MouseEvent).clientX; clientY = (e as MouseEvent).clientY;
-    }
-    return {
-      x: (clientX - rect.left) * (canvas.width / rect.width),
-      y: (clientY - rect.top) * (canvas.height / rect.height),
-    };
-  };
-
-  const erase = useCallback((x: number, y: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, BRUSH_RADIUS * (window.devicePixelRatio || 1), 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    pixelsClearedRef.current += BRUSH_RADIUS * BRUSH_RADIUS * Math.PI;
-  }, []);
-
-  const checkRevealed = useCallback(() => {
-    if (revealed || totalPixelsRef.current === 0) return;
-    if (pixelsClearedRef.current / totalPixelsRef.current >= REVEAL_THRESHOLD) setRevealed(true);
-  }, [revealed]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const onTouchStart = (e: TouchEvent) => { e.preventDefault(); isDrawingRef.current = true; const p = getPos(e); if (p) { erase(p.x, p.y); checkRevealed(); } };
-    const onTouchMove = (e: TouchEvent) => { if (!isDrawingRef.current) return; e.preventDefault(); const p = getPos(e); if (p) { erase(p.x, p.y); checkRevealed(); } };
-    const onTouchEnd = () => { isDrawingRef.current = false; };
-    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
-    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
-    canvas.addEventListener('touchend', onTouchEnd);
-    return () => {
-      canvas.removeEventListener('touchstart', onTouchStart);
-      canvas.removeEventListener('touchmove', onTouchMove);
-      canvas.removeEventListener('touchend', onTouchEnd);
-    };
-  }, [erase, checkRevealed]);
-
-  const handleMouseStart = useCallback((e: React.MouseEvent) => {
-    isDrawingRef.current = true;
-    const pos = getPos(e.nativeEvent);
-    if (pos) { erase(pos.x, pos.y); checkRevealed(); }
-  }, [erase, checkRevealed]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDrawingRef.current) return;
-    const pos = getPos(e.nativeEvent);
-    if (pos) { erase(pos.x, pos.y); checkRevealed(); }
-  }, [erase, checkRevealed]);
-
-  const handleMouseEnd = useCallback(() => { isDrawingRef.current = false; }, []);
-
-  const handleOption = useCallback((code: string) => {
+  const handleOption = useCallback((country: Country) => {
     if (result || !target) return;
-    if (code === target.code) {
+    if (country.code === target.code) {
       setResult('correct');
+      setRevealed(true);
       setScore(s => s + 10);
       adjustWeight(target.code, true);
-      speak(`🎉 ¡${target.name}!`);
+      speak(`¡Muy bien! ¡${target.name}!`);
       setTimeout(() => { generateRound(); }, 2000);
     } else {
       setResult('incorrect');
@@ -184,29 +84,46 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
       </header>
 
       <main className="max-w-md mx-auto">
-        <div ref={containerRef} className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-gray-200 mb-6 touch-none select-none">
-          {target && <img src={`${FLAG_BASE}/${target.code.toLowerCase()}.svg`} alt="" className="absolute inset-0 w-full h-full object-contain p-4" draggable={false} />}
-          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-crosshair touch-none"
-            onMouseDown={handleMouseStart} onMouseMove={handleMouseMove} onMouseUp={handleMouseEnd} onMouseLeave={handleMouseEnd} />
-        </div>
+        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-gray-200 mb-6">
+          {target && (
+            <img src={`${FLAG_BASE}/${target.code.toLowerCase()}.svg`} alt="" onError={handleFlagError}
+              className="absolute inset-0 w-full h-full object-contain p-4" draggable={false} />
+          )}
 
-        {revealed && (
-          <div className="grid grid-cols-3 gap-3">
-            {options.map(country => {
-              const isCorrect = result === 'correct' && country.code === target?.code;
-              const isWrong = result === 'incorrect' && country.code !== target?.code;
+          <div className="absolute inset-0 grid grid-cols-4 grid-rows-3 gap-1 p-1">
+            {Array.from({ length: TOTAL_BLOCKS }).map((_, i) => {
+              const isCleared = clearedBlocks.has(i);
               return (
-                <button key={country.code} onClick={() => handleOption(country.code)} disabled={result === 'correct'}
-                  className={`relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all flex items-center justify-center p-2
-                    ${isCorrect ? 'border-green-400 bg-green-50 scale-105' : isWrong ? 'border-red-300 animate-shake'
-                      : 'border-transparent hover:border-amber-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                  <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain" />
-                  {isCorrect && <span className="absolute text-3xl">🎉</span>}
-                </button>
+                <motion.button
+                  key={i}
+                  onClick={() => handleBlockTap(i)}
+                  animate={{ opacity: isCleared ? 0 : 1 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="bg-gray-400 rounded-xl flex items-center justify-center cursor-pointer active:scale-95"
+                  style={{ pointerEvents: isCleared ? 'none' : 'auto' }}
+                >
+                  <span className="text-2xl md:text-3xl">❓</span>
+                </motion.button>
               );
             })}
           </div>
-        )}
+        </div>
+
+        <div className="grid grid-cols-3 gap-3">
+          {options.map(country => {
+            const isCorrect = result === 'correct' && country.code === target?.code;
+            const isWrong = result === 'incorrect' && country.code !== target?.code;
+            return (
+              <button key={country.code} onClick={() => handleOption(country)} disabled={result === 'correct'}
+                className={`relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all flex items-center justify-center p-2
+                  ${isCorrect ? 'border-green-400 bg-green-50 scale-105' : isWrong ? 'border-red-300 animate-shake'
+                    : 'border-transparent hover:border-amber-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
+                {isCorrect && <span className="absolute text-3xl">🎉</span>}
+              </button>
+            );
+          })}
+        </div>
       </main>
     </div>
   );

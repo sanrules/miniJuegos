@@ -26,7 +26,7 @@ function HalfBackground({ code, side, className }: { code: string; side: 'left' 
 
 export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  const { getRandomCountry } = useAdaptiveLearning(poolCountries);
+  const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);
   const [target, setTarget] = useState<Country | null>(null);
   const [options, setOptions] = useState<Country[]>([]);
   const [solved, setSolved] = useState(false);
@@ -52,14 +52,16 @@ export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
     if (country.code === target.code) {
       setSolved(true);
       setScore(s => s + 10);
+      adjustWeight(target.code, true);
       confetti({ particleCount: 60, spread: 80, origin: { y: 0.6 } });
-      speak(`🎉 ¡${target.name}!`);
+      speak(`¡Muy bien! ¡${target.name}!`);
       setTimeout(() => generateRound(), 2500);
     } else {
       setWrongCode(country.code);
+      adjustWeight(target.code, false);
       setTimeout(() => setWrongCode(null), 600);
     }
-  }, [solved, target, speak, generateRound]);
+  }, [solved, target, speak, adjustWeight, generateRound]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-sky-50 py-6 px-4">

@@ -26,3 +26,9 @@ Fase 7.
 - AnimalesJuego nunca termina. Se queda parado y no muestra la pantalla de fin (5 rondas).
 - CucuJuego no funciona bien: la bandera está escondida detrás de un elemento y al pulsar ese, no pasa nada. Pulsas otro y te dice que la bandera estaba ahí.
 - PuzleJuego muestra la misma mitad para completar el puzle que la que ya hay. Si tiene que dividir la bandera en AB , te enseña A y las opciones de abajo son A todas.
+
+---
+Fase 8.
+- Sigue diciendo "confeti" en vez de "muy bien", al acertar en algunos juegos.
+- En el juego de cucu la bandera siempre se esconde detrás del mismo emoji.
+- En el juego de animales, lo ideal sería que cuando hiciera click en una bandera dijera su nombre.

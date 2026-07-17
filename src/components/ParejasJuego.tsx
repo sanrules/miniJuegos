@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE } from '../utils/game';
+import { FLAG_BASE, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 
@@ -110,7 +110,7 @@ export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GamePro
                   ${isSolved ? 'border-green-400 bg-green-50 opacity-60' : isSelected
                     ? 'border-yellow-400 shadow-yellow-200 scale-105 ring-2 ring-yellow-300'
                     : 'border-transparent hover:border-yellow-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain" />
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
                 {isSolved && <span className="absolute text-2xl">✅</span>}
               </button>
             );
@@ -131,7 +131,7 @@ export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GamePro
                     ? 'border-red-300 bg-red-50 animate-shake' : isSelected
                     ? 'border-yellow-400 shadow-yellow-200 scale-105 ring-2 ring-yellow-300'
                     : 'border-transparent hover:border-green-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain" />
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
                 {isSolved && <span className="absolute text-2xl">✅</span>}
               </button>
             );

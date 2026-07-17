@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
 import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, getExpertDistractors } from '../utils/game';
+import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
+import { countries as allCountries, type Country } from '../data/countries';
 
 const ROUND_TOTAL = 10;
 
@@ -51,13 +51,23 @@ export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GamePro
       ? getExpertDistractors(t, poolCountries, 3)
       : poolCountries.filter(c => c.code !== t.code).sort(() => Math.random() - 0.5).slice(0, 3);
 
+    if (distractors.length < 3) {
+      const fallback = allCountries.filter(
+        c => c.code !== t.code && c.difficulty === 1 && !distractors.some(d => d.code === c.code)
+      ).sort(() => Math.random() - 0.5);
+      for (const c of fallback) {
+        if (distractors.length >= 3) break;
+        distractors.push(c);
+      }
+    }
+
     setTarget(t);
     setOptions([t, ...distractors].sort(() => Math.random() - 0.5));
     setCorrectCode(null);
     setWrongCodes(new Set());
 
     setTimeout(() => greet(`¿Cuál es la bandera de ${t.name}?`), 600);
-  }, [poolCountries, getRandomCountry, speak, onFinish, level, greet]);
+  }, [poolCountries, getRandomCountry, speak, onFinish, level, greet, allCountries]);
 
   useEffect(() => { generateRound(); }, []);
 
@@ -141,7 +151,7 @@ export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GamePro
                     : correctCode ? 'opacity-60 border-transparent'
                     : 'border-transparent hover:border-indigo-300 hover:shadow-xl active:scale-[0.97] cursor-pointer'}`}
               >
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" className="w-full h-full object-contain drop-shadow-sm" />
+                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain drop-shadow-sm" />
                 {isCorrect && <span className="absolute inset-0 flex items-center justify-center bg-green-500/10 rounded-2xl"><span className="text-6xl md:text-7xl drop-shadow-lg animate-bounce">🎉</span></span>}
                 {isWrong && <span className="absolute inset-0 flex items-center justify-center bg-red-500/10 rounded-2xl"><span className="text-5xl md:text-6xl opacity-70">❌</span></span>}
               </button>

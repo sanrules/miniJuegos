@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
 import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, getExpertDistractors } from '../utils/game';
+import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 
@@ -159,7 +159,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
           <button key={flag.id} onClick={() => handleTap(flag)}
             className="absolute transition-opacity duration-200 active:scale-110"
             style={{ left: flag.x, top: flag.y, width: FLAG_SIZE, height: FLAG_SIZE }}>
-            <img src={`${FLAG_BASE}/${flag.code.toLowerCase()}.svg`} alt=""
+            <img src={`${FLAG_BASE}/${flag.code.toLowerCase()}.svg`} alt="" onError={handleFlagError}
               className="w-full h-full object-contain drop-shadow-md rounded-lg bg-white/80 p-1" draggable={false} />
           </button>
         ))}

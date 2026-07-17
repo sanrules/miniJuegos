@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useSpeech } from '../hooks/useSpeech';
 import { type Level, levelEmojis, levelNames, levelGreetings, levelBackgrounds } from '../data/countries';
 
@@ -9,6 +10,7 @@ const levels: Level[] = ['explorer', 'continents', 'world', 'expert'];
 
 export function LevelSelection({ onSelect }: LevelSelectionProps) {
   const { speak } = useSpeech();
+  const navigatingRef = useRef(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 py-8 px-4 flex items-center">
@@ -18,6 +20,8 @@ export function LevelSelection({ onSelect }: LevelSelectionProps) {
             <button
               key={level}
               onClick={() => {
+                if (navigatingRef.current) return;
+                navigatingRef.current = true;
                 speak(levelGreetings[level]);
                 setTimeout(() => onSelect(level), 800);
               }}
