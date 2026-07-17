@@ -7,22 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Fase 5">
-      <change afterPath="$PROJECT_DIR$/documents/fase6.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/cambios.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/cambios.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AdivinaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdivinaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Celebration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Celebration.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GameSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/IntrusoJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/IntrusoJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MapSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MapSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ParejasJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ParejasJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RascaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RascaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/countries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/countries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useSpeech.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useSpeech.ts" afterDir="false" />
-    </list>
+    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Fase 6" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,61 +58,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000743567" />
-      <entry key="MS500" value="1.012205580133061" />
-      <entry key="S2" value="1.5413292384911068" />
-      <entry key="S5" value="2.213776258389598" />
-      <entry key="S10" value="2.9046211514210096" />
-      <entry key="S30" value="10.18371767479618" />
-      <entry key="S60" value="26.01007493553218" />
-      <entry key="M2" value="52.3467249936665" />
-      <entry key="M5" value="92.63561116535278" />
-      <entry key="M10" value="131.0534663106443" />
-      <entry key="M15" value="163.12156278132474" />
-      <entry key="M30" value="230.25510749342868" />
-      <entry key="H1" value="293.60777567202484" />
-      <entry key="H2" value="339.0223970021353" />
-      <entry key="H4" value="366.5420548326343" />
-      <entry key="D1" value="392.4561310836422" />
-      <entry key="W1" value="397.2002607793162" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.000000018704912" />
+      <entry key="S60" value="1.0011147212067115" />
+      <entry key="M2" value="1.3426903268547905" />
+      <entry key="M5" value="13.393184155561048" />
+      <entry key="M10" value="48.93480647325082" />
+      <entry key="M15" value="84.4282276507426" />
+      <entry key="M30" value="165.6683350662641" />
+      <entry key="H1" value="249.29499416389012" />
+      <entry key="H2" value="312.76588852086513" />
+      <entry key="H4" value="352.49885360087575" />
+      <entry key="D1" value="390.72458383381206" />
+      <entry key="W1" value="397.80413946444526" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="3.29286364662145E-240" />
-      <entry key="S10" value="1.814624932767476E-120" />
-      <entry key="S30" value="1.2197260275161508E-40" />
-      <entry key="S60" value="1.1044120732390314E-20" />
-      <entry key="M2" value="1.0509101166317844E-10" />
-      <entry key="M5" value="1.0200612011173623E-4" />
-      <entry key="M10" value="0.010099807924497167" />
-      <entry key="M15" value="0.04672422174767051" />
-      <entry key="M30" value="0.2161578630253126" />
-      <entry key="H1" value="0.46492780410007" />
-      <entry key="H2" value="0.6818561461921883" />
-      <entry key="H4" value="0.82574581209486" />
-      <entry key="D1" value="0.9685924139086338" />
-      <entry key="W1" value="0.9954516066908755" />
+      <entry key="S5" value="1.2643568519671192E-292" />
+      <entry key="S10" value="1.1244362373950278E-146" />
+      <entry key="S30" value="2.2403280220858243E-49" />
+      <entry key="S60" value="4.733210350370873E-25" />
+      <entry key="M2" value="6.879833101442847E-13" />
+      <entry key="M5" value="1.3646810504466674E-5" />
+      <entry key="M10" value="0.0036941589711958277" />
+      <entry key="M15" value="0.023897018532087755" />
+      <entry key="M30" value="0.15458660528030038" />
+      <entry key="H1" value="0.39317503135410414" />
+      <entry key="H2" value="0.62703670654444" />
+      <entry key="H4" value="0.7918564936555426" />
+      <entry key="D1" value="0.9618508809451581" />
+      <entry key="W1" value="0.9944588591066744" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9726549474851119" />
-      <entry key="MS500" value="1.0066250926350977" />
-      <entry key="S2" value="1.5393813363631577" />
-      <entry key="S5" value="2.212710796603914" />
-      <entry key="S10" value="2.903911662147572" />
-      <entry key="S30" value="10.182772293622246" />
-      <entry key="S60" value="26.008829504075873" />
-      <entry key="M2" value="52.3452848505876" />
-      <entry key="M5" value="92.63161206165209" />
-      <entry key="M10" value="131.05707596611919" />
-      <entry key="M15" value="163.1616317459966" />
-      <entry key="M30" value="230.46593252671474" />
-      <entry key="H1" value="294.06923752245996" />
-      <entry key="H2" value="339.702257644408" />
-      <entry key="H4" value="367.3667267130788" />
-      <entry key="D1" value="393.4245328607916" />
-      <entry key="W1" value="398.1956848516362" />
+      <entry key="MS100" value="3.766271852660343E-12" />
+      <entry key="MS500" value="0.005190178961314496" />
+      <entry key="S2" value="0.2684080786320132" />
+      <entry key="S5" value="0.5909057734671828" />
+      <entry key="S10" value="0.7687039569738032" />
+      <entry key="S30" value="0.9160511292349743" />
+      <entry key="S60" value="0.9582202578949215" />
+      <entry key="M2" value="1.3209986336077084" />
+      <entry key="M5" value="13.38391915624305" />
+      <entry key="M10" value="48.931752200325136" />
+      <entry key="M15" value="84.44580234662929" />
+      <entry key="M30" value="165.8176475480466" />
+      <entry key="H1" value="249.68450771991095" />
+      <entry key="H2" value="313.39072487715794" />
+      <entry key="H4" value="353.28949758148013" />
+      <entry key="D1" value="391.6862149597916" />
+      <entry key="W1" value="398.7985664672891" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -192,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784275382608</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fase 6">
+      <option name="closed" value="true" />
+      <created>1784277346496</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1784277346496</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +206,7 @@
     <MESSAGE value="Fase 1 y fase 2" />
     <MESSAGE value="Fase 3 y fase 4" />
     <MESSAGE value="Fase 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fase 5" />
+    <MESSAGE value="Fase 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fase 6" />
   </component>
 </project>

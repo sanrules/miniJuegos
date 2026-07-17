@@ -92,6 +92,7 @@ export default function App() {
       return (
         <MapSelection
           onSelectContinent={(continent) => setScreen({ type: 'gameSelection', level: screen.level, continent })}
+          onBack={() => setScreen({ type: 'level' })}
         />
       );
 

@@ -4,9 +4,10 @@ import { continents, type Continent, continentNames, continentAnimals, continent
 
 interface MapSelectionProps {
   onSelectContinent: (continent: Continent) => void;
+  onBack: () => void;
 }
 
-export function MapSelection({ onSelectContinent }: MapSelectionProps) {
+export function MapSelection({ onSelectContinent, onBack }: MapSelectionProps) {
   const { speak } = useSpeech();
 
   const handlePress = useCallback((continent: Continent) => {
@@ -20,6 +21,9 @@ export function MapSelection({ onSelectContinent }: MapSelectionProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 py-8 px-4">
+      <header className="max-w-5xl mx-auto mb-6">
+        <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-3xl" aria-label="Atrás">⬅️</button>
+      </header>
       <main className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {continents.map((continent) => (
