@@ -75,7 +75,7 @@ export default function App() {
         <LevelSelection onSelect={(level) => {
           if (level === 'continents') navigate({ type: 'map', level });
           else navigate({ type: 'gameSelection', level, continent: null });
-        }} />
+        }} onBack={() => navigate({ type: 'welcome' })} />
       );
 
     case 'map':

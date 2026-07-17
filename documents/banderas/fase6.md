@@ -28,7 +28,7 @@ Cuando el juego pida una bandera objetivo y sus 3 distractores, el "grifo" de pa
 >
 > Hola. Vamos a implementar el sistema de 4 niveles de dificultad y progresión en nuestro juego de banderas. Debemos asegurar que toda la interfaz sea visual y por voz, adaptada para niños no lectores.
 >
-> **Paso 1: Modificar la selección en `src/App.tsx`** Crea un nuevo estado llamado `currentLevel` (que pueda ser 'explorer' | 'continents' | 'world' | 'expert'). Modifica el flujo de navegación para que, después de pulsar "Play", el niño vea una pantalla con 4 tarjetas gigantes, coloridas y táctiles:
+> **Paso 1: Modificar la selección en `../../src/App.tsx`** Crea un nuevo estado llamado `currentLevel` (que pueda ser 'explorer' | 'continents' | 'world' | 'expert'). Modifica el flujo de navegación para que, después de pulsar "Play", el niño vea una pantalla con 4 tarjetas gigantes, coloridas y táctiles:
 >
 > 1. **🧭 Explorador:** Dice por voz: _"¡Nivel Explorador, banderas fáciles!"_. Filtra la base de datos para usar solo países con `difficulty: 1`.
 >

@@ -6,18 +6,18 @@ Añadir el "game juice" definitivo: efectos de sonido usando la Web Audio API (e
 
 ### Estructura de Archivos
 
-- `src/utils/audio.ts` (Sintetizador de sonidos nativo)
+- `../../src/utils/audio.ts` (Sintetizador de sonidos nativo)
 
-- `src/components/Celebration.tsx` (Animación de éxito con confeti)
+- `../../src/components/Celebration.tsx` (Animación de éxito con confeti)
 
-- `src/App.tsx` (Navegación final integrada)
+- `../../src/App.tsx` (Navegación final integrada)
 
 
 ### **PROMPT PARA OPENCODE - FASE 5**
 >
 > Vamos a poner el broche de oro a nuestra aplicación web infantil conectando todo y dándole dinamismo.
 >
-> **Paso 1: Sintetizador de Sonidos nativo (`src/utils/audio.ts`)**
+> **Paso 1: Sintetizador de Sonidos nativo (`../../src/utils/audio.ts`)**
 >
 > Crea un archivo utilitario que use la `AudioContext` nativa del navegador para generar efectos de sonido sencillos de forma gratuita y sin descargar archivos externos:
 >
@@ -26,11 +26,11 @@ Añadir el "game juice" definitivo: efectos de sonido usando la Web Audio API (e
 > - `playErrorSound()`: Genera un tono grave y descendente que vibre un poco (tipo muelle roto).
 >
 >
-> **Paso 2: Celebración con Confeti (`src/components/Celebration.tsx`)**
+> **Paso 2: Celebración con Confeti (`../../src/components/Celebration.tsx`)**
 >
 > Integra la librería `canvas-confetti`. Al ganar un juego, debe lanzar una gran ráfaga de confeti y mostrar una estrella gigante 🌟 que rebote y baile usando _Framer Motion_.
 >
-> **Paso 3: Integración de Pantallas en `src/App.tsx`**
+> **Paso 3: Integración de Pantallas en `../../src/App.tsx`**
 >
 > Une todas las fases en la pantalla principal:
 >

@@ -5,6 +5,7 @@ import { useLevelGreeting } from '../hooks/useLevelGreeting';
 import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
+import { BackButton } from './BackButton';
 
 const FALL_SPEED = 0.38;
 const FLAG_SIZE = 80;
@@ -144,7 +145,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 py-6 px-4 overflow-hidden">
       <header className="max-w-3xl mx-auto mb-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
-          <button onClick={onBack} className="flex items-center gap-1.5 p-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Atrás"><span className="text-2xl">⬅️</span><span className="text-sm font-bold text-gray-600">Atrás</span></button>
+          <BackButton onClick={onBack} />
           <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="text-xl">🏁</span><span className="text-sm font-bold text-gray-600">Terminar</span></button>
         </div>
         <div className="flex gap-1">{Array.from({ length: starCount }).map((_, i) => (<span key={i} className="text-2xl">⭐</span>))}</div>

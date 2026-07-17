@@ -5,6 +5,7 @@ import { FLAG_BASE, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
 import { animals } from '../data/countries';
+import { BackButton } from './BackButton';
 
 const ROUNDS_TOTAL = 5;
 
@@ -72,7 +73,7 @@ export function AnimalesJuego({ poolCountries, onBack, onFinish }: GameProps) {
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <button onClick={onBack} className="flex items-center gap-1.5 p-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Atrás"><span className="text-2xl">⬅️</span><span className="text-sm font-bold text-gray-600">Atrás</span></button>
+          <BackButton onClick={onBack} />
           <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="text-xl">🏁</span><span className="text-sm font-bold text-gray-600">Terminar</span></button>
         </div>
         <div className="bg-white/80 rounded-xl px-4 py-2 shadow-md text-lg font-bold text-gray-600">{round}/{ROUNDS_TOTAL}</div>

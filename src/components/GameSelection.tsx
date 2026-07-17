@@ -1,5 +1,6 @@
 import type { Continent, Level } from '../data/countries';
 import { continentAnimals, continentNames, levelEmojis, levelNames } from '../data/countries';
+import { BackButton } from './BackButton';
 
 export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'puzle' | 'animales';
 
@@ -32,9 +33,7 @@ export function GameSelection({ level, continent, onSelectGame, onBack }: GameSe
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-6 flex items-center">
-        <button onClick={onBack}
-          className="flex items-center gap-1.5 p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all"
-          aria-label="Atrás"><span className="text-2xl">⬅️</span><span className="text-sm font-bold text-gray-600">Atrás</span></button>
+<BackButton onClick={onBack} />
         <h1 className="text-2xl font-bold text-gray-800 flex-1 text-center">
           <span className="mr-2">{levelEmojis[level]}</span>
           {levelNames[level]}

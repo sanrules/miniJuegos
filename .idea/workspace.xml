@@ -7,22 +7,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Expandir países">
-      <change afterPath="$PROJECT_DIR$/documents/compendio.md" afterDir="false" />
+    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="fixes">
+      <change afterPath="$PROJECT_DIR$/documents/animales/propuesta.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/cambios.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/cambios.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AdivinaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdivinaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AnimalesJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AnimalesJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CucuJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CucuJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/GameSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GameSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/IntrusoJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/IntrusoJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/Fase2.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/Fase2.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/cambios.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/cambios.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/expandCountries.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/expandCountries.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase1.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase3.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase3.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase4.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase4.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase5.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase5.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase6.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase6.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase7.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase7.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/fase8.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/banderas/fase8.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AtlasInteractivo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AtlasInteractivo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Celebration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Celebration.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/LevelSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LevelSelection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ParejasJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ParejasJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PuzleJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PuzleJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RascaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RascaJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/game.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/countries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/countries.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,61 +75,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000000002" />
-      <entry key="MS500" value="1.0011441917382664" />
-      <entry key="S2" value="1.6102991344055169" />
-      <entry key="S5" value="5.163287212247518" />
-      <entry key="S10" value="11.886411895963654" />
-      <entry key="S30" value="31.099922604320714" />
-      <entry key="S60" value="44.409565608309585" />
-      <entry key="M2" value="54.587649368519976" />
-      <entry key="M5" value="63.64179712815932" />
-      <entry key="M10" value="73.00565934275916" />
-      <entry key="M15" value="87.4767576382599" />
-      <entry key="M30" value="149.62670663875866" />
-      <entry key="H1" value="264.3314714987835" />
-      <entry key="H2" value="390.24509533929506" />
-      <entry key="H4" value="487.2018311854166" />
-      <entry key="D1" value="594.0795028055222" />
-      <entry key="W1" value="615.3593029999171" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0000000018771615" />
+      <entry key="S30" value="1.0012335797241783" />
+      <entry key="S60" value="1.0351269842300397" />
+      <entry key="M2" value="1.1917142383918635" />
+      <entry key="M5" value="1.822549125473362" />
+      <entry key="M10" value="4.798655384194355" />
+      <entry key="M15" value="11.525329249902448" />
+      <entry key="M30" value="50.010185636824644" />
+      <entry key="H1" value="151.02221362374848" />
+      <entry key="H2" value="295.46165194515186" />
+      <entry key="H4" value="425.6968525395218" />
+      <entry key="D1" value="585.5081467369762" />
+      <entry key="W1" value="619.1804121444517" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
-      <entry key="S10" value="5.29304529247937E-274" />
-      <entry key="S30" value="8.089131026069818E-92" />
-      <entry key="S60" value="2.844139769081268E-46" />
-      <entry key="M2" value="1.6864577578704049E-23" />
-      <entry key="M5" value="7.776607628195043E-10" />
-      <entry key="M10" value="2.7886569577836136E-5" />
-      <entry key="M15" value="9.195952704715277E-4" />
-      <entry key="M30" value="0.030324829273575604" />
-      <entry key="H1" value="0.17414025747533404" />
-      <entry key="H2" value="0.4173011592067895" />
-      <entry key="H4" value="0.6459885132158302" />
-      <entry key="D1" value="0.9297598740446031" />
-      <entry key="W1" value="0.9896498034670717" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="8.582446770851937E-123" />
+      <entry key="S60" value="9.264149594459147E-62" />
+      <entry key="M2" value="3.04370655524792E-31" />
+      <entry key="M5" value="6.213854957937362E-13" />
+      <entry key="M10" value="7.882800871477911E-7" />
+      <entry key="M15" value="8.533365950808432E-5" />
+      <entry key="M30" value="0.009237621961743318" />
+      <entry key="H1" value="0.09611254840936913" />
+      <entry key="H2" value="0.3100202387092932" />
+      <entry key="H4" value="0.5567946108838518" />
+      <entry key="D1" value="0.9070178566573195" />
+      <entry key="W1" value="0.9861548605300975" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9330329915368076" />
-      <entry key="MS500" value="0.9873657185198497" />
-      <entry key="S2" value="1.6056068179899654" />
-      <entry key="S5" value="5.1584954308567195" />
-      <entry key="S10" value="11.881101448445254" />
-      <entry key="S30" value="31.095492569690574" />
-      <entry key="S60" value="44.406471081730004" />
-      <entry key="M2" value="54.58575319001371" />
-      <entry key="M5" value="63.64060779661565" />
-      <entry key="M10" value="73.00395376347514" />
-      <entry key="M15" value="87.47540713732462" />
-      <entry key="M30" value="149.65398018950162" />
-      <entry key="H1" value="264.50252711096846" />
-      <entry key="H2" value="390.6600458763467" />
-      <entry key="H4" value="487.84634211409724" />
-      <entry key="D1" value="595.0089619152392" />
-      <entry key="W1" value="616.3489083020794" />
+      <entry key="MS100" value="0.8766057213160351" />
+      <entry key="MS500" value="0.974004268543241" />
+      <entry key="S2" value="0.9934367347173356" />
+      <entry key="S5" value="0.9973695065410157" />
+      <entry key="S10" value="0.998683889053727" />
+      <entry key="S30" value="1.0007908411124986" />
+      <entry key="S60" value="1.0348527780005998" />
+      <entry key="M2" value="1.191458300914853" />
+      <entry key="M5" value="1.8223419546257593" />
+      <entry key="M10" value="4.798468355789371" />
+      <entry key="M15" value="11.525100560657997" />
+      <entry key="M30" value="50.01843556579888" />
+      <entry key="H1" value="151.1165926764128" />
+      <entry key="H2" value="295.76990985187524" />
+      <entry key="H4" value="426.25236543993157" />
+      <entry key="D1" value="586.4148698100352" />
+      <entry key="W1" value="620.1665224637873" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -161,6 +162,11 @@
     "ts.external.directory.path": "/home/slimbook/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/documents/banderas" />
+    </key>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="" />
@@ -241,7 +247,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784280948467</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1784283489436</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1784283489436</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +282,7 @@
     <MESSAGE value="Fase 7" />
     <MESSAGE value="Fase 8" />
     <MESSAGE value="Expandir países" />
-    <option name="LAST_COMMIT_MESSAGE" value="Expandir países" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
   </component>
 </project>

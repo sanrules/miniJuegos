@@ -53,12 +53,12 @@ Al tocar el país, la voz del juego dirá una frase súper estructurada, pausada
 >
 > Por favor, implementa las siguientes características en TypeScript, React y Tailwind CSS:
 >
-> **Paso 1: Ampliar la Base de Datos (`src/data/countries.json`)**
+> **Paso 1: Ampliar la Base de Datos (`../../src/data/countries.json`)**
 >
 > - Asegúrate de que los países del archivo JSON tengan ahora la propiedad `capital` (ej: `"capital": "Madrid"`).
 >
 >
-> **Paso 2: El Componente del Mapa (`src/components/AtlasInteractivo.tsx`)**
+> **Paso 2: El Componente del Mapa (`../../src/components/AtlasInteractivo.tsx`)**
 >
 > 1. Renderiza un mapa del mundo simplificado en formato SVG. (Puedes generar un SVG básico responsivo donde los países principales tengan su etiqueta `<path>` con el atributo `id` igual al código de país en minúsculas, por ejemplo: `id="es"`, `id="fr"`, etc.).
 >

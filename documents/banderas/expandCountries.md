@@ -3,7 +3,7 @@ Fase 9. Expandir Países
 
 > **PROMPT OPENCODE - PAÍSES PARTE 1 (EUROPA Y AMÉRICA)**
 >
-> Hola. Necesito expandir nuestra base de datos de países para el juego de banderas de React. El pool actual de 48 países es muy corto. Quiero que generes el archivo `src/data/countries.ts` incluyendo **TODOS** los países del mundo.
+> Hola. Necesito expandir nuestra base de datos de países para el juego de banderas de React. El pool actual de 48 países es muy corto. Quiero que generes el archivo `../../src/data/countries.ts` incluyendo **TODOS** los países del mundo.
 >
 > Para que no te cortes por límite de caracteres, en este primer mensaje genérame la interfaz y los arrays completos para **Europa (EU)** y **América (AM)** (incluyendo Norteamérica, Centroamérica y Sudamérica).
 >
@@ -41,7 +41,7 @@ Para asegurarte de que los minijuegos de los más pequeños (los de 3 años) no 
 
 > **PROMPT OPENCODE - PAÍSES PARTE 3 (Estructuras de soporte)**
 >
-> Para cerrar el archivo `src/data/countries.ts`, añade debajo del gran array de países las siguientes constantes y configuraciones que necesita nuestro juego. Asegúrate de que `puzzleFlags` contenga banderas icónicas y fáciles de reconocer visualmente para un niño pequeño:
+> Para cerrar el archivo `../../src/data/countries.ts`, añade debajo del gran array de países las siguientes constantes y configuraciones que necesita nuestro juego. Asegúrate de que `puzzleFlags` contenga banderas icónicas y fáciles de reconocer visualmente para un niño pequeño:
 >
 > TypeScript
 >

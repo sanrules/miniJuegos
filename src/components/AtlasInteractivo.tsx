@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSpeech } from '../hooks/useSpeech';
-import { countries, continentNames, type Country } from '../data/countries';
+import { countries, continentNames, type Country, type Continent } from '../data/countries';
 import { FLAG_BASE } from '../utils/game';
+import { BackButton } from './BackButton';
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 const countryByNum = new Map<number, Country>(countries.map(c => [c.numCode, c]));
@@ -56,42 +57,81 @@ const countryCoords: Record<string, [number, number]> = {
   tv: [179, -8.5], vu: [167, -16],
 };
 
+const continentConfig: Record<Continent, { center: [number, number]; zoom: number }> = {
+  EU: { center: [15, 50], zoom: 3.5 },
+  AS: { center: [90, 30], zoom: 2.5 },
+  AF: { center: [20, 5], zoom: 2.8 },
+  AM: { center: [-80, 15], zoom: 2.5 },
+  OC: { center: [150, -25], zoom: 3.5 },
+};
+
+type View = 'world' | Continent;
+
 export function AtlasInteractivo({ onBack }: { onBack: () => void }) {
   const { speak } = useSpeech();
+  const [view, setView] = useState<View>('world');
   const [selected, setSelected] = useState<Country | null>(null);
 
-  const handleSelect = (country: Country) => {
+  const isWorld = view === 'world';
+  const zoom = isWorld ? 1 : continentConfig[view].zoom;
+  const center: [number, number] = isWorld ? [0, 20] : continentConfig[view].center;
+  const markerSize = isWorld ? 20 : 14;
+
+  const visibleCountries = isWorld
+    ? countries.filter(c => c.difficulty === 1)
+    : countries.filter(c => c.continent === view);
+
+  const handleGeographyClick = (country: Country | undefined) => {
+    if (!country) return;
+    if (isWorld) {
+      setView(country.continent);
+      setSelected(null);
+    } else {
+      setSelected(country);
+      speak(`¡Has tocado ${country.name}! Su capital es ${country.capital} y está en ${continentNames[country.continent]}`);
+    }
+  };
+
+  const handleMarkerClick = (country: Country) => {
     setSelected(country);
     speak(`¡Has tocado ${country.name}! Su capital es ${country.capital} y está en ${continentNames[country.continent]}`);
   };
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-100 overflow-hidden">
-      <div className="absolute top-4 left-4 z-10">
-        <button onClick={onBack}
-          className="flex items-center gap-1.5 p-3 bg-white/90 rounded-xl shadow-md backdrop-blur-sm active:scale-95 transition-all">
-          <span className="text-2xl">⬅️</span>
-          <span className="text-sm font-bold text-gray-600">Atrás</span>
-        </button>
+      <div className="absolute top-4 left-4 z-10 flex gap-2">
+<BackButton onClick={onBack} className="bg-white/90 backdrop-blur-sm" />
+        {!isWorld && (
+          <motion.button
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            onClick={() => { setView('world'); setSelected(null); }}
+            className="p-3 bg-white/90 rounded-xl shadow-md backdrop-blur-sm active:scale-95 transition-all text-2xl"
+            aria-label="Vista mundial"
+          >
+            🌍
+          </motion.button>
+        )}
       </div>
 
       <div className="w-full h-screen">
         <ComposableMap width={800} height={600} style={{ width: '100%', height: '100%' }}
           projection="geoEqualEarth" projectionConfig={{ scale: 180, center: [0, 20] }}>
-          <ZoomableGroup zoom={1} minZoom={0.8} maxZoom={5}>
+          <ZoomableGroup zoom={zoom} center={center} minZoom={0.8} maxZoom={5}>
             <Geographies geography={GEO_URL}>
               {({ geographies }) => geographies.map(geo => {
                 const country = countryByNum.get(Number(geo.id));
                 const isSelected = selected && country?.code === selected.code;
+                const isInContinent = country && (isWorld || country.continent === view);
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    onClick={() => { if (country) handleSelect(country); }}
+                    onClick={() => handleGeographyClick(country)}
                     id={String(geo.id)}
                     style={{
                       default: {
-                        fill: isSelected ? '#fcd34d' : country ? '#86efac' : '#f1f5f9',
+                        fill: isSelected ? '#fcd34d' : isInContinent ? '#86efac' : '#f1f5f9',
                         stroke: isSelected ? '#f97316' : '#cbd5e1',
                         strokeWidth: isSelected ? 3 : 0.5,
                         outline: 'none',
@@ -104,16 +144,23 @@ export function AtlasInteractivo({ onBack }: { onBack: () => void }) {
               })}
             </Geographies>
 
-            {countries.map(c => {
+            {visibleCountries.map(c => {
               const pos = countryCoords[c.code.toLowerCase()];
               if (!pos) return null;
               return (
                 <Marker key={c.code} coordinates={pos}>
-                  <g onClick={(e) => { e.stopPropagation(); handleSelect(c); }} style={{ cursor: 'pointer' }}>
-                    <circle r={13} fill="white" stroke="#94a3b8" strokeWidth={1.5} />
-                    <image href={`${FLAG_BASE}/${c.code.toLowerCase()}.svg`} x={-10} y={-7} width={20} height={14}
+                  <motion.g
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    onClick={(e) => { e.stopPropagation(); handleMarkerClick(c); }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <circle r={markerSize / 2 + 3} fill="white" stroke="#94a3b8" strokeWidth={1.5} />
+                    <image href={`${FLAG_BASE}/${c.code.toLowerCase()}.svg`}
+                      x={-markerSize / 2} y={-markerSize / 2 + 1} width={markerSize} height={markerSize * 0.7}
                       style={{ pointerEvents: 'none' }} />
-                  </g>
+                  </motion.g>
                 </Marker>
               );
             })}
@@ -131,6 +178,7 @@ export function AtlasInteractivo({ onBack }: { onBack: () => void }) {
               <span className="text-3xl">🏷️</span>
               <img src={`${FLAG_BASE}/${selected.code.toLowerCase()}.svg`}
                 className="w-20 h-14 shadow-md rounded-lg border border-gray-200" alt="" />
+              <span className="text-2xl font-bold text-gray-800">{selected.name}</span>
             </div>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-3xl">🏛️</span>
