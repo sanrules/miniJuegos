@@ -7,19 +7,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="fix boton atrás">
-      <change afterPath="$PROJECT_DIR$/documents/animales/fase9.md" afterDir="false" />
+    <list default="true" id="ef06a517-5c90-4f91-ada9-457637734ca0" name="Changes" comment="Fase 10: Bosque de los Sonidos y Safari Busca&#10;&#10;- Añadidos 4 animales (tigre, orangután, oveja, gallo) para completar&#10;  los hábitats de juego (jungla 4, granja 4, océano 3)&#10;- Añadidos habitatNames/habitatEmojis a animals.ts&#10;- Creado utils/animalAudio.ts: sintetizador Web Audio API con&#10;  soporte para roar/trumpet/chirp/splash/boing y cancelación&#10;  de sonido anterior para evitar solapamiento&#10;- Creado components/AnimalMenu.tsx: menú de entrada al mundo animal&#10;  con enlaces a BosqueSonidos y SafariBusca&#10;- Creado components/games/BosqueSonidos.tsx: exploración libre con&#10;  selector de hábitat, animales flotando (Framer Motion),&#10;  sonido sintético + voz al tocar&#10;- Creado components/games/SafariBusca.tsx: juego guiado de 5 rondas&#10;  con búsqueda por voz, confeti en acierto, scramble en error,&#10;  anti-repetición del mismo animal, y pantalla de finalización&#10;- App.tsx: rutas animalsMenu / animalsBosque / animalsSafari&#10;  reemplazan la anterior ruta directa animalWorld">
+      <change afterPath="$PROJECT_DIR$/documents/animales/fase 10.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/animales/propuesta.md" beforeDir="false" afterPath="$PROJECT_DIR$/documents/animales/propuesta.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AnimalesJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AnimalesJuego.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AtlasInteractivo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AtlasInteractivo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/countries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/countries.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdivinaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/AdivinaJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AnimalesJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/AnimalesJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AtlasInteractivo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/AtlasInteractivo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/BackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Celebration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/Celebration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CucuJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/CucuJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GameSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/GameSelection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/IntrusoJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/IntrusoJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LevelSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/LevelSelection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LluviaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/LluviaJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MapSelection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/MapSelection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ParejasJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/ParejasJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PuzleJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/PuzleJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RascaJuego.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/paises/RascaJuego.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/WorldSelector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comunes/WorldSelector.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/animals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/animals.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="59" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -75,61 +90,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.4718060586398063" />
-      <entry key="MS500" value="4.759953289735574" />
-      <entry key="S2" value="10.423851773529224" />
-      <entry key="S5" value="14.643684627601397" />
-      <entry key="S10" value="16.94466244387" />
-      <entry key="S30" value="18.96473969182063" />
-      <entry key="S60" value="20.137455077553398" />
-      <entry key="M2" value="21.825488794928756" />
-      <entry key="M5" value="24.324500950429446" />
-      <entry key="M10" value="27.369254243934556" />
-      <entry key="M15" value="32.78888269489562" />
-      <entry key="M30" value="66.24380358160062" />
-      <entry key="H1" value="161.9810919595688" />
-      <entry key="H2" value="306.4781162953466" />
-      <entry key="H4" value="440.7886623243632" />
-      <entry key="D1" value="608.9842073852489" />
-      <entry key="W1" value="644.798488117181" />
+      <entry key="MS100" value="1.7232258226161803" />
+      <entry key="MS500" value="4.563079995980363" />
+      <entry key="S2" value="6.8355079406709285" />
+      <entry key="S5" value="7.502169808265764" />
+      <entry key="S10" value="7.820226185923182" />
+      <entry key="S30" value="10.900061588023846" />
+      <entry key="S60" value="16.249571241501506" />
+      <entry key="M2" value="22.916021398812582" />
+      <entry key="M5" value="30.465193639045207" />
+      <entry key="M10" value="35.99375575149215" />
+      <entry key="M15" value="41.22066351845067" />
+      <entry key="M30" value="65.1209784207285" />
+      <entry key="H1" value="143.70504313416308" />
+      <entry key="H2" value="286.0855896691484" />
+      <entry key="H4" value="434.6944618572998" />
+      <entry key="D1" value="636.3960791410532" />
+      <entry key="W1" value="681.1852209195976" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="3.550189774509567E-128" />
-      <entry key="S60" value="1.8841947283944644E-64" />
-      <entry key="M2" value="1.3726597278256783E-32" />
-      <entry key="M5" value="1.7989751192772407E-13" />
-      <entry key="M10" value="4.241432681626834E-7" />
-      <entry key="M15" value="5.645144359076402E-5" />
-      <entry key="M30" value="0.007513417570637392" />
-      <entry key="H1" value="0.08667997214257392" />
-      <entry key="H2" value="0.2944146262375091" />
-      <entry key="H4" value="0.5425998767393113" />
-      <entry key="D1" value="0.9031224020388203" />
-      <entry key="W1" value="0.9855486965045206" />
+      <entry key="MS500" value="1.330242562278423E-124" />
+      <entry key="S2" value="1.4706372940303269E-31" />
+      <entry key="S5" value="6.853171156558589E-13" />
+      <entry key="S10" value="1.165220290953876E-6" />
+      <entry key="S30" value="0.016686393565247752" />
+      <entry key="S60" value="0.18265795893273534" />
+      <entry key="M2" value="0.6043936391331307" />
+      <entry key="M5" value="1.2392031025133137" />
+      <entry key="M10" value="1.5742934072478023" />
+      <entry key="M15" value="1.70504691069977" />
+      <entry key="M30" value="1.8498838148800805" />
+      <entry key="H1" value="1.9787621285623285" />
+      <entry key="H2" value="2.1991938484964675" />
+      <entry key="H4" value="2.4687120275022076" />
+      <entry key="D1" value="2.884146557874064" />
+      <entry key="W1" value="2.982615090191039" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.4497801036224311" />
-      <entry key="MS500" value="4.745576528093418" />
-      <entry key="S2" value="10.415745001846242" />
-      <entry key="S5" value="14.639014727573887" />
-      <entry key="S10" value="16.94193254312412" />
-      <entry key="S30" value="18.96364612571802" />
-      <entry key="S60" value="20.136624500343064" />
-      <entry key="M2" value="21.824769754083032" />
-      <entry key="M5" value="24.323999517944326" />
-      <entry key="M10" value="27.368893140741505" />
-      <entry key="M15" value="32.78854760505374" />
-      <entry key="M30" value="66.2504163073338" />
-      <entry key="H1" value="162.0661584502677" />
-      <entry key="H2" value="306.7708318757063" />
-      <entry key="H4" value="441.33000036014363" />
-      <entry key="D1" value="609.8870341223122" />
-      <entry key="W1" value="645.7839919927736" />
+      <entry key="MS100" value="1.6994904749592308" />
+      <entry key="MS500" value="4.5500627573380035" />
+      <entry key="S2" value="6.830520269119898" />
+      <entry key="S5" value="7.499966203472636" />
+      <entry key="S10" value="7.818818627511304" />
+      <entry key="S30" value="10.909331100789682" />
+      <entry key="S60" value="16.417372120886135" />
+      <entry key="M2" value="23.503261194105026" />
+      <entry key="M5" value="31.69249396700597" />
+      <entry key="M10" value="37.56081685613629" />
+      <entry key="M15" value="42.920515143509654" />
+      <entry key="M30" value="66.96774021812938" />
+      <entry key="H1" value="145.6813330131168" />
+      <entry key="H2" value="288.2826885548182" />
+      <entry key="H4" value="437.1616760211223" />
+      <entry key="D1" value="639.2798744630571" />
+      <entry key="W1" value="684.1677826197136" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -150,7 +165,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "feat/animales",
-    "last_opened_file_path": "/home/slimbook/Documents/HRCOMMS/esencial-frontend",
+    "last_opened_file_path": "/home/slimbook/Documents/miniJuegos/src/components/animales",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -159,11 +174,25 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "ts.external.directory.path": "/home/slimbook/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external"
+    "ts.external.directory.path": "/home/slimbook/Documents/miniJuegos/node_modules/typescript/lib"
   }
 }]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/animales" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/paises" />
+      <recent name="$PROJECT_DIR$/src/components/comunes" />
+      <recent name="$PROJECT_DIR$/src/components/animales" />
       <recent name="$PROJECT_DIR$/documents/banderas" />
     </key>
   </component>
@@ -263,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784285182107</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;* Enable selection between 'Flags' and 'Animals' game worlds.&#10;* Refactor animal data into a dedicated `src/data/animals.ts` file.&#10;* Integrate animal display for selected countries in Atlas.&#10;* Adjust map marker sizes and country coordinates in Atlas.&#10;* Update back navigation for Atlas and Level Selection screens.&#10;* Add initial routing for 'Animales World' game.&#10;* Update animal-related project documentation.&#10;Refs: [ Fase 9 ]">
+      <option name="closed" value="true" />
+      <created>1784286229088</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1784286229088</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,6 +329,11 @@
     <MESSAGE value="Expandir países" />
     <MESSAGE value="fixes" />
     <MESSAGE value="fix boton atrás" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix boton atrás" />
+    <MESSAGE value="Status code 413, &quot;{&quot;error&quot;:{&quot;code&quot;:&quot;tokens_limit_reached&quot;,&quot;message&quot;:&quot;Request body too large for gpt-4o-mini model. Max size: 8000 tokens.&quot;,&quot;details&quot;:&quot;Request body too large for gpt-4o-mini model. Max size: 8000 tokens.&quot;}}&quot;" />
+    <MESSAGE value="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;*" />
+    <MESSAGE value="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;* Enable selection between 'Flags' and 'Animals' game worlds.&#10;* Refactor animal data into a dedicated `src/data/animals.ts` file.&#10;* Integrate animal display for selected countries in Atlas.&#10;* Adjust map" />
+    <MESSAGE value="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;* Enable selection between 'Flags' and 'Animals' game worlds.&#10;* Refactor animal data into a dedicated `src/data/animals.ts` file.&#10;* Integrate animal display for selected countries in Atlas.&#10;* Adjust map marker sizes and country coordinates in Atlas.&#10;* Update back navigation for Atlas and Level Selection screens.&#10;* Add initial routing for 'Animales World' game.&#10;* Update animal-related project documentation.&#10;Refs: [ Fase" />
+    <MESSAGE value="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;* Enable selection between 'Flags' and 'Animals' game worlds.&#10;* Refactor animal data into a dedicated `src/data/animals.ts` file.&#10;* Integrate animal display for selected countries in Atlas.&#10;* Adjust map marker sizes and country coordinates in Atlas.&#10;* Update back navigation for Atlas and Level Selection screens.&#10;* Add initial routing for 'Animales World' game.&#10;* Update animal-related project documentation.&#10;Refs: [ Fase 9 ]" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(world-selection): Implement game world selector&#10;&#10;* Introduce new `WorldSelector` as application entry point.&#10;* Enable selection between 'Flags' and 'Animals' game worlds.&#10;* Refactor animal data into a dedicated `src/data/animals.ts` file.&#10;* Integrate animal display for selected countries in Atlas.&#10;* Adjust map marker sizes and country coordinates in Atlas.&#10;* Update back navigation for Atlas and Level Selection screens.&#10;* Add initial routing for 'Animales World' game.&#10;* Update animal-related project documentation.&#10;Refs: [ Fase 9 ]" />
   </component>
 </project>

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSpeech } from '../hooks/useSpeech';
-import { countries, continentNames, type Country, type Continent } from '../data/countries';
-import { FLAG_BASE } from '../utils/game';
-import { BackButton } from './BackButton';
-import { animals } from '../data/animals';
+import { useSpeech } from '../../hooks/useSpeech.ts';
+import { countries, continentNames, type Country, type Continent } from '../../data/countries.ts';
+import { FLAG_BASE } from '../../utils/game.ts';
+import { BackButton } from './BackButton.tsx';
+import { animals } from '../../data/animals.ts';
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 const countryByNum = new Map<number, Country>(countries.map(c => [c.numCode, c]));

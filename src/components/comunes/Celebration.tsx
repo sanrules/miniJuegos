@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { playSuccessSound } from '../utils/audio';
-import { useSpeech } from '../hooks/useSpeech';
+import { playSuccessSound } from '../../utils/audio.ts';
+import { useSpeech } from '../../hooks/useSpeech.ts';
 
 interface CelebrationProps {
   score: number;

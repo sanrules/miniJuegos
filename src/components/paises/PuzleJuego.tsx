@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { useSpeech } from '../hooks/useSpeech';
-import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
-import { FLAG_BASE } from '../utils/game';
-import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
-import { BackButton } from './BackButton';
+import { useSpeech } from '../../hooks/useSpeech.ts';
+import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
+import { FLAG_BASE } from '../../utils/game.ts';
+import type { GameProps } from '../../utils/game.ts';
+import type { Country } from '../../data/countries.ts';
+import {BackButton} from "../comunes/BackButton.tsx";
 
 function flagUrl(code: string) {
   return `${FLAG_BASE}/${code.toLowerCase()}.svg`;

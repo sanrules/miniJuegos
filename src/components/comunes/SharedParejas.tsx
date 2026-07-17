@@ -1,72 +1,68 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSpeech } from '../hooks/useSpeech';
-import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, handleFlagError } from '../utils/game';
-import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
+import { useSpeech } from '../../hooks/useSpeech.ts';
 import { BackButton } from './BackButton';
+import type { SharedGameProps } from '../../utils/sharedGame';
 
 const PAIRS_COUNT = 4;
 
-export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+export function SharedParejas({ pool, renderCard, onBack, onFinish }: SharedGameProps) {
   const { speak } = useSpeech();
-  const greet = useLevelGreeting(level, speak);
-  const lastCodeRef = useRef<string | null>(null);
+  const lastIdRef = useRef<string | null>(null);
   const scoreRef = useRef(0);
 
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [bottomRow, setBottomRow] = useState<Country[]>([]);
-  const [selectedCode, setSelectedCode] = useState<string | null>(null);
+  const [cards, setCards] = useState<typeof pool>([]);
+  const [bottomRow, setBottomRow] = useState<typeof pool>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedRow, setSelectedRow] = useState<'top' | 'bottom' | null>(null);
-  const [solvedCodes, setSolvedCodes] = useState<Set<string>>(new Set());
-  const [shakingCode, setShakingCode] = useState<string | null>(null);
+  const [solvedIds, setSolvedIds] = useState<Set<string>>(new Set());
+  const [shakingId, setShakingId] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
   const initGame = useCallback(() => {
-    if (poolCountries.length < PAIRS_COUNT) return;
+    if (pool.length < PAIRS_COUNT) return;
 
-    const pool = [...poolCountries].sort(() => Math.random() - 0.5);
-    const last = lastCodeRef.current;
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const last = lastIdRef.current;
     const picked = last
-      ? (pool.filter(c => c.code !== last).length >= PAIRS_COUNT ? pool.filter(c => c.code !== last) : pool).slice(0, PAIRS_COUNT)
-      : pool.slice(0, PAIRS_COUNT);
+      ? (shuffled.filter(c => c.id !== last).length >= PAIRS_COUNT ? shuffled.filter(c => c.id !== last) : shuffled).slice(0, PAIRS_COUNT)
+      : shuffled.slice(0, PAIRS_COUNT);
 
-    lastCodeRef.current = picked[0].code;
-    setCountries(picked);
+    lastIdRef.current = picked[0].id;
+    setCards(picked);
     setBottomRow([...picked].sort(() => Math.random() - 0.5));
-    setSelectedCode(null);
+    setSelectedId(null);
     setSelectedRow(null);
-    setSolvedCodes(new Set());
-    setShakingCode(null);
+    setSolvedIds(new Set());
+    setShakingId(null);
     setGameOver(false);
-    setTimeout(() => greet('Selecciona las parejas de banderas'), 600);
-  }, [poolCountries, greet]);
+    setTimeout(() => speak(PAIRS_COUNT === 4 ? 'Selecciona las parejas' : 'Selecciona los pares'), 600);
+  }, [pool, speak]);
 
   useEffect(() => { initGame(); }, []);
 
-  const handleTap = useCallback((country: Country, row: 'top' | 'bottom') => {
-    if (solvedCodes.has(country.code)) return;
+  const handleTap = useCallback((card: typeof pool[number], row: 'top' | 'bottom') => {
+    if (solvedIds.has(card.id)) return;
 
-    if (selectedCode === null || selectedRow === null) {
-      setSelectedCode(country.code);
+    if (selectedId === null || selectedRow === null) {
+      setSelectedId(card.id);
       setSelectedRow(row);
-      speak(`¡${country.name}!`);
+      speak(`¡${card.name}!`);
       return;
     }
 
     if (selectedRow === row) {
-      setSelectedCode(country.code);
-      speak(`¡${country.name}!`);
+      setSelectedId(card.id);
+      speak(`¡${card.name}!`);
       return;
     }
 
-    if (country.code === selectedCode) {
+    if (card.id === selectedId) {
       speak('¡Acertaste!');
-      const updated = new Set(solvedCodes);
-      updated.add(country.code);
-      setSolvedCodes(updated);
-      setSelectedCode(null);
+      const updated = new Set(solvedIds);
+      updated.add(card.id);
+      setSolvedIds(updated);
+      setSelectedId(null);
       setSelectedRow(null);
       scoreRef.current += 10;
       setScore(scoreRef.current);
@@ -78,12 +74,12 @@ export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GamePro
         }, 600);
       }
     } else {
-      setShakingCode(country.code);
-      setTimeout(() => setShakingCode(null), 700);
+      setShakingId(card.id);
+      setTimeout(() => setShakingId(null), 700);
     }
-  }, [selectedCode, selectedRow, solvedCodes, speak]);
+  }, [selectedId, selectedRow, solvedIds, speak]);
 
-  if (poolCountries.length < PAIRS_COUNT) {
+  if (pool.length < PAIRS_COUNT) {
     return <div className="min-h-screen flex items-center justify-center p-4"><span className="text-6xl">😕</span></div>;
   }
 
@@ -102,16 +98,16 @@ export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GamePro
 
       <main className="max-w-lg mx-auto">
         <div className="grid grid-cols-4 gap-3 mb-8">
-          {countries.map(country => {
-            const isSolved = solvedCodes.has(country.code);
-            const isSelected = selectedCode === country.code && selectedRow === 'top';
+          {cards.map(card => {
+            const isSolved = solvedIds.has(card.id);
+            const isSelected = selectedId === card.id && selectedRow === 'top';
             return (
-              <button key={`top-${country.code}`} onClick={() => handleTap(country, 'top')} disabled={isSolved}
+              <button key={`top-${card.id}`} onClick={() => handleTap(card, 'top')} disabled={isSolved}
                 className={`relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all duration-300 flex items-center justify-center p-2
                   ${isSolved ? 'border-green-400 bg-green-50 opacity-60' : isSelected
                     ? 'border-yellow-400 shadow-yellow-200 scale-105 ring-2 ring-yellow-300'
                     : 'border-transparent hover:border-yellow-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
+                {renderCard(card)}
                 {isSolved && <span className="absolute text-2xl">✅</span>}
               </button>
             );
@@ -121,18 +117,18 @@ export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GamePro
         <div className="border-t-2 border-dashed border-gray-300 my-6" />
 
         <div className="grid grid-cols-4 gap-3">
-          {bottomRow.map(country => {
-            const isSolved = solvedCodes.has(country.code);
-            const isShaking = shakingCode === country.code;
-            const isSelected = selectedCode === country.code && selectedRow === 'bottom';
+          {bottomRow.map(card => {
+            const isSolved = solvedIds.has(card.id);
+            const isShaking = shakingId === card.id;
+            const isSelected = selectedId === card.id && selectedRow === 'bottom';
             return (
-              <button key={`bottom-${country.code}`} onClick={() => handleTap(country, 'bottom')} disabled={isSolved}
+              <button key={`bottom-${card.id}`} onClick={() => handleTap(card, 'bottom')} disabled={isSolved}
                 className={`relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all duration-300 flex items-center justify-center p-2
                   ${isSolved ? 'border-green-400 bg-green-50 opacity-60' : isShaking
                     ? 'border-red-300 bg-red-50 animate-shake' : isSelected
                     ? 'border-yellow-400 shadow-yellow-200 scale-105 ring-2 ring-yellow-300'
                     : 'border-transparent hover:border-green-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
+                {renderCard(card)}
                 {isSolved && <span className="absolute text-2xl">✅</span>}
               </button>
             );

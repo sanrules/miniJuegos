@@ -40,4 +40,24 @@ export const animals: AnimalEntry[] = [
   { emoji: '🦔', name: 'erizo', countryCodes: ['GB', 'FR', 'DE', 'ES', 'IT', 'NL', 'BE', 'DK'], habitat: 'forest', soundType: 'chirp' },
   { emoji: '🦜', name: 'loro', countryCodes: ['BR', 'CO', 'EC', 'PE', 'AU', 'ID', 'PG'], habitat: 'jungle', soundType: 'chirp' },
   { emoji: '🦉', name: 'búho', countryCodes: ['US', 'CA', 'GB', 'FR', 'DE', 'RU', 'JP'], habitat: 'forest', soundType: 'chirp' },
+  { emoji: '🐯', name: 'tigre', countryCodes: ['IN'], habitat: 'jungle', soundType: 'roar' },
+  { emoji: '🦧', name: 'orangután', countryCodes: ['ID', 'MY'], habitat: 'jungle', soundType: 'chirp' },
+  { emoji: '🐑', name: 'oveja', countryCodes: ['GB', 'NZ', 'AU'], habitat: 'farm', soundType: 'boing' },
+  { emoji: '🐓', name: 'gallo', countryCodes: ['FR', 'ES', 'PT'], habitat: 'farm', soundType: 'chirp' },
 ];
+
+export const habitatNames: Record<Habitat, string> = {
+  jungle: 'Selva',
+  farm: 'Granja',
+  ocean: 'Océano',
+  forest: 'Bosque',
+  savanna: 'Sabana',
+};
+
+export const habitatEmojis: Record<Habitat, string> = {
+  jungle: '🌴',
+  farm: '🚜',
+  ocean: '🌊',
+  forest: '🌲',
+  savanna: '🌅',
+};

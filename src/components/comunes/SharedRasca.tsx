@@ -1,50 +1,48 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useSpeech } from '../hooks/useSpeech';
-import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
-import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
-import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
+import { useSpeech } from '../../hooks/useSpeech.ts';
 import { BackButton } from './BackButton';
+import type { GameCard } from '../../utils/sharedGame';
+import type { ReactNode } from 'react';
+
+interface Props {
+  pool: GameCard[];
+  renderCard: (card: GameCard) => ReactNode;
+  onBack: () => void;
+  onFinish?: (score: number) => void;
+  generateRound: (pool: GameCard[]) => { target: GameCard; options: GameCard[] };
+  onAdjust?: (id: string, success: boolean) => void;
+}
 
 const GRID_COLS = 4;
 const GRID_ROWS = 3;
 const TOTAL_BLOCKS = GRID_COLS * GRID_ROWS;
 const AUTO_REVEAL_THRESHOLD = Math.floor(TOTAL_BLOCKS * 0.7);
 
-export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+export function SharedRasca({ pool, renderCard, onBack, onFinish, generateRound, onAdjust }: Props) {
   const { speak } = useSpeech();
-  const greet = useLevelGreeting(level, speak);
-  const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
-  const lastCodeRef = useRef<string | null>(null);
+  const lastIdRef = useRef<string | null>(null);
 
-  const [target, setTarget] = useState<Country | null>(null);
-  const [options, setOptions] = useState<Country[]>([]);
+  const [target, setTarget] = useState<GameCard | null>(null);
+  const [options, setOptions] = useState<GameCard[]>([]);
   const [revealed, setRevealed] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
   const [clearedBlocks, setClearedBlocks] = useState<Set<number>>(new Set());
 
-  const generateRound = useCallback(() => {
-    const available = poolCountries.filter(c => c.code !== lastCodeRef.current);
-    const t = getRandomCountry(available.length > 0 ? available : poolCountries);
-    if (!t) return;
-    lastCodeRef.current = t.code;
-
-    const distractors = level === 'expert'
-      ? getExpertDistractors(t, poolCountries, 2)
-      : poolCountries.filter(c => c.code !== t.code).sort(() => Math.random() - 0.5).slice(0, 2);
-
-    setTarget(t);
-    setOptions([t, ...distractors].sort(() => Math.random() - 0.5));
+  const nextRound = useCallback(() => {
+    const available = pool.filter(c => c.id !== lastIdRef.current);
+    const round = generateRound(available.length > 0 ? available : pool);
+    lastIdRef.current = round.target.id;
+    setTarget(round.target);
+    setOptions(round.options);
     setRevealed(false);
     setResult(null);
     setClearedBlocks(new Set());
-    setTimeout(() => greet('¿Qué bandera se esconde? ¡Toca los bloques para descubrir!'), 600);
-  }, [poolCountries, getRandomCountry, greet, level]);
+    setTimeout(() => speak('¿Qué se esconde? ¡Toca los bloques para descubrir!'), 600);
+  }, [pool, generateRound, speak]);
 
-  useEffect(() => { generateRound(); }, []);
+  useEffect(() => { nextRound(); }, []);
 
   const handleBlockTap = useCallback((index: number) => {
     if (revealed || result) return;
@@ -56,21 +54,25 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
     }
   }, [clearedBlocks, revealed, result]);
 
-  const handleOption = useCallback((country: Country) => {
+  const handleOption = useCallback((card: GameCard) => {
     if (result || !target) return;
-    if (country.code === target.code) {
+    if (card.id === target.id) {
       setResult('correct');
       setRevealed(true);
       setScore(s => s + 10);
-      adjustWeight(target.code, true);
+      onAdjust?.(target.id, true);
       speak(`¡Muy bien! ¡${target.name}!`);
-      setTimeout(() => { generateRound(); }, 2000);
+      setTimeout(() => { nextRound(); }, 2000);
     } else {
       setResult('incorrect');
-      adjustWeight(target.code, false);
+      onAdjust?.(target.id, false);
       setTimeout(() => setResult(null), 800);
     }
-  }, [result, target, adjustWeight, speak, generateRound]);
+  }, [result, target, speak, nextRound]);
+
+  if (pool.length < 2) {
+    return <div className="min-h-screen flex items-center justify-center p-4"><span className="text-6xl">😕</span></div>;
+  }
 
   const starCount = Math.min(Math.floor(score / 10), 5);
 
@@ -87,8 +89,9 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
       <main className="max-w-md mx-auto">
         <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-gray-200 mb-6">
           {target && (
-            <img src={`${FLAG_BASE}/${target.code.toLowerCase()}.svg`} alt="" onError={handleFlagError}
-              className="absolute inset-0 w-full h-full object-contain p-4" draggable={false} />
+            <div className="absolute inset-0 flex items-center justify-center p-4">
+              {renderCard(target)}
+            </div>
           )}
 
           <div className="absolute inset-0 grid grid-cols-4 grid-rows-3 gap-1 p-1">
@@ -111,15 +114,15 @@ export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps
         </div>
 
         <div className="grid grid-cols-3 gap-3">
-          {options.map(country => {
-            const isCorrect = result === 'correct' && country.code === target?.code;
-            const isWrong = result === 'incorrect' && country.code !== target?.code;
+          {options.map(card => {
+            const isCorrect = result === 'correct' && card.id === target?.id;
+            const isWrong = result === 'incorrect' && card.id !== target?.id;
             return (
-              <button key={country.code} onClick={() => handleOption(country)} disabled={result === 'correct'}
+              <button key={card.id} onClick={() => handleOption(card)} disabled={result === 'correct'}
                 className={`relative aspect-[4/3] rounded-xl bg-white shadow-md border-[4px] transition-all flex items-center justify-center p-2
                   ${isCorrect ? 'border-green-400 bg-green-50 scale-105' : isWrong ? 'border-red-300 animate-shake'
                     : 'border-transparent hover:border-amber-300 hover:shadow-lg active:scale-95 cursor-pointer'}`}>
-                <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain" />
+                {renderCard(card)}
                 {isCorrect && <span className="absolute text-3xl">🎉</span>}
               </button>
             );

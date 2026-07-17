@@ -1,5 +1,5 @@
-import type { Continent, Level } from '../data/countries';
-import { continentAnimals, continentNames, levelEmojis, levelNames } from '../data/countries';
+import type { Continent, Level } from '../../data/countries.ts';
+import { continentAnimals, continentNames, levelEmojis, levelNames } from '../../data/countries.ts';
 import { BackButton } from './BackButton';
 
 export type GameId = 'adivina' | 'parejas' | 'rasca' | 'intruso' | 'puzle' | 'animales';

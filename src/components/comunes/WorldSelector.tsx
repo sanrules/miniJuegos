@@ -1,4 +1,4 @@
-import { useSpeech } from '../hooks/useSpeech';
+import { useSpeech } from '../../hooks/useSpeech.ts';
 import { motion } from 'framer-motion';
 
 interface WorldSelectorProps {
@@ -29,7 +29,7 @@ export function WorldSelector({ onSelectFlags, onSelectAnimals, onSelectAtlas }:
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 relative">
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 relative overflow-hidden">
       <button onClick={handleFlags}
         className="bg-gradient-to-br from-blue-400 via-sky-400 to-indigo-500 flex flex-col items-center justify-center p-8 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
       >

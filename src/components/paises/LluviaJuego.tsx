@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSpeech } from '../hooks/useSpeech';
-import { useAdaptiveLearning } from '../hooks/useAdaptiveLearning';
-import { useLevelGreeting } from '../hooks/useLevelGreeting';
-import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../utils/game';
-import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
-import { BackButton } from './BackButton';
+import { useSpeech } from '../../hooks/useSpeech.ts';
+import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
+import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
+import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../../utils/game.ts';
+import type { GameProps } from '../../utils/game.ts';
+import type { Country } from '../../data/countries.ts';
+import {BackButton} from "../comunes/BackButton.tsx";
 
 const FALL_SPEED = 0.38;
 const FLAG_SIZE = 80;

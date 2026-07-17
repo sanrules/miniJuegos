@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSpeech } from '../hooks/useSpeech';
-import { FLAG_BASE, handleFlagError } from '../utils/game';
-import type { GameProps } from '../utils/game';
-import type { Country } from '../data/countries';
-import { animals } from '../data/animals';
-import { BackButton } from './BackButton';
+import { useSpeech } from '../../hooks/useSpeech.ts';
+import { FLAG_BASE, handleFlagError } from '../../utils/game.ts';
+import type { GameProps } from '../../utils/game.ts';
+import type { Country } from '../../data/countries.ts';
+import { animals } from '../../data/animals.ts';
+import { BackButton } from './BackButton.tsx';
 
 const ROUNDS_TOTAL = 5;
 

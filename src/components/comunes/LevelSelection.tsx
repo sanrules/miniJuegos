@@ -1,6 +1,6 @@
 import {useRef} from 'react';
-import {type Level, levelBackgrounds, levelEmojis, levelGreetings, levelNames} from '../data/countries';
-import {useSpeech} from '../hooks/useSpeech';
+import {type Level, levelBackgrounds, levelEmojis, levelGreetings, levelNames} from '../../data/countries.ts';
+import {useSpeech} from '../../hooks/useSpeech.ts';
 import { BackButton } from './BackButton';
 
 interface LevelSelectionProps {
