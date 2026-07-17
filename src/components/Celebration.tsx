@@ -86,9 +86,10 @@ export function Celebration({ score, onContinue }: CelebrationProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onContinue}
-            className="px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-shadow"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-shadow"
           >
-            ▶️
+            <span className="text-xl">▶️</span>
+            <span>Seguir</span>
           </motion.button>
         </motion.div>
       </motion.div>

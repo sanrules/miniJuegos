@@ -15,3 +15,8 @@
 - En ParejasJuego.tsx, cuando entremos al juego, tendrá que decir "Selecciona las parejas de banderas".
 - En ParejasJuego.tsx también permitiremos elegir de las banderas de abajo. Ahora mismo solo se puede seleccionar una arriba y su correspondiente abajo.
 - En la celebración al finalizar un juego, diremos "Muy bien".
+
+--- 
+Fase 6 
+- El "rasca" en el móvil no funciona.
+- Añade algunos textos y títulos en los menús  y botones (muy sencillos) para los padres. Manten los emojis.

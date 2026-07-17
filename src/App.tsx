@@ -53,9 +53,10 @@ function WelcomeScreen({ onPlay }: { onPlay: () => void }) {
             speak('¡A jugar!');
             onPlay();
           }}
-          className="inline-flex items-center gap-4 px-14 py-6 bg-green-400 hover:bg-green-300 text-white rounded-full text-5xl font-bold shadow-2xl hover:shadow-green-400/50 transition-all"
+          className="inline-flex items-center gap-3 px-10 py-5 bg-green-400 hover:bg-green-300 text-white rounded-full text-3xl font-bold shadow-2xl hover:shadow-green-400/50 transition-all"
         >
-          ▶️
+          <span className="text-4xl">▶️</span>
+          <span>¡Jugar!</span>
         </motion.button>
       </motion.div>
     </div>
