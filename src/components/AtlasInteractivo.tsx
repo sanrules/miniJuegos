@@ -5,6 +5,7 @@ import { useSpeech } from '../hooks/useSpeech';
 import { countries, continentNames, type Country, type Continent } from '../data/countries';
 import { FLAG_BASE } from '../utils/game';
 import { BackButton } from './BackButton';
+import { animals } from '../data/animals';
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 const countryByNum = new Map<number, Country>(countries.map(c => [c.numCode, c]));
@@ -22,16 +23,16 @@ const countryCoords: Record<string, [number, number]> = {
   za: [25, -30], sd: [31, 15], ss: [31, 7], tz: [35, -6], tg: [1, 8.5],
   tn: [9, 34], ug: [32, 1], dj: [43, 11.5], zm: [28, -14], zw: [30, -19],
   al: [20, 41], ad: [1.5, 42.5], at: [14.5, 47.5], by: [28, 53.5],
-  be: [4.5, 50.8], ba: [18, 44], bg: [25, 42.5], hr: [16, 45], cy: [33, 35],
-  cz: [15.5, 49.8], dk: [10, 56], ee: [25, 58.5], fi: [26, 64],
-  fr: [2.2, 46.6], de: [10.5, 51.2], gr: [22, 39], hu: [19.5, 47],
-  is: [-18, 65], ie: [-8, 53], it: [12.5, 41.9], xk: [20.8, 42.6],
-  lv: [25, 57], li: [9.5, 47.2], lt: [24, 55], lu: [6, 49.8], mt: [14.5, 35.9],
-  md: [28.5, 47], mc: [7.4, 43.7], me: [19.3, 42.8], nl: [5.3, 52.1],
-  mk: [21.7, 41.6], no: [10, 62], pl: [19.1, 51.9], pt: [-8.2, 39.4],
-  ro: [25, 46], ru: [40, 60], sm: [12.5, 43.9], rs: [21, 44], sk: [19.5, 48.7],
-  si: [14.8, 46.1], es: [-3.7, 40.4], se: [15, 62], ch: [7.8, 46.8],
-  tr: [35, 39], ua: [31, 49], gb: [-3.4, 55.4], va: [12.5, 41.9],
+  be: [4.2, 50.6], ba: [17.7, 44.3], bg: [25, 42.5], hr: [15.7, 45.2], cy: [33, 35],
+  cz: [15.8, 49.5], dk: [10, 56], ee: [25, 58.5], fi: [26, 64],
+  fr: [2.2, 46.6], de: [10.5, 51.2], gr: [22, 39], hu: [19.8, 46.7],
+  is: [-18, 65], ie: [-8, 53], it: [12.0, 42.0], xk: [20.4, 42.3],
+  lv: [25, 57], li: [9.5, 47.2], lt: [24, 55], lu: [6.3, 49.5], mt: [14.5, 35.9],
+  md: [28.5, 47], mc: [7.4, 43.7], me: [19.0, 43.2], nl: [5.0, 52.5],
+  mk: [22.2, 41.8], no: [10, 62], pl: [19.1, 51.9], pt: [-8.2, 39.4],
+  ro: [25, 46], ru: [40, 60], sm: [12.8, 44.2], rs: [21.3, 43.7], sk: [19.2, 49.0],
+  si: [15.1, 45.8], es: [-3.7, 40.4], se: [15, 62], ch: [7.8, 46.8],
+  tr: [35, 39], ua: [31, 49], gb: [-3.4, 55.4], va: [12.3, 41.7],
   am: [44.5, 40.2], az: [47.5, 40.3], bh: [50.5, 26], bd: [90, 24],
   bt: [89.5, 27.5], bn: [115, 4.5], kh: [105, 13], cn: [104.2, 35],
   tl: [126, -8.5], ge: [43, 42], in: [78, 20], id: [113, -5], ir: [54, 32],
@@ -75,7 +76,10 @@ export function AtlasInteractivo({ onBack }: { onBack: () => void }) {
   const isWorld = view === 'world';
   const zoom = isWorld ? 1 : continentConfig[view].zoom;
   const center: [number, number] = isWorld ? [0, 20] : continentConfig[view].center;
-  const markerSize = isWorld ? 20 : 14;
+  const markerSize = isWorld ? 20 : 12;
+  const countryAnimals = selected
+    ? animals.filter(a => a.countryCodes.includes(selected.code))
+    : [];
 
   const visibleCountries = isWorld
     ? countries.filter(c => c.difficulty === 1)
@@ -188,6 +192,16 @@ export function AtlasInteractivo({ onBack }: { onBack: () => void }) {
               <span className="text-3xl">🌍</span>
               <span className="text-xl text-gray-600 font-medium">{continentNames[selected.continent]}</span>
             </div>
+            {countryAnimals.length > 0 && (
+              <div className="flex items-center gap-3 mt-3">
+                <span className="text-3xl">🐾</span>
+                <div className="flex gap-1.5 flex-wrap">
+                  {countryAnimals.map(a => (
+                    <span key={a.emoji} className="text-3xl" title={a.name}>{a.emoji}</span>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

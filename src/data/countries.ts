@@ -1780,35 +1780,7 @@ export const continentAnimals: Record<Continent, string> = {
     OC: '🦘',
 };
 
-export interface AnimalEntry {
-    emoji: string;
-    name: string;
-    countryCodes: string[];
-}
 
-export const animals: AnimalEntry[] = [
-    {emoji: '🦘', name: 'canguro', countryCodes: ['AU']},
-    {emoji: '🐨', name: 'koala', countryCodes: ['AU']},
-    {emoji: '🐼', name: 'panda', countryCodes: ['CN']},
-    {emoji: '🦁', name: 'león', countryCodes: ['KE', 'ZA', 'TZ']},
-    {emoji: '🐘', name: 'elefante', countryCodes: ['KE', 'ZA', 'TZ', 'IN', 'TH']},
-    {emoji: '🦒', name: 'jirafa', countryCodes: ['KE', 'TZ', 'ZA']},
-    {emoji: '🦓', name: 'cebra', countryCodes: ['KE', 'TZ', 'ZA', 'ET']},
-    {emoji: '🦏', name: 'rinoceronte', countryCodes: ['KE', 'ZA', 'TZ']},
-    {emoji: '🐆', name: 'leopardo', countryCodes: ['KE', 'TZ', 'ZA']},
-    {emoji: '🐊', name: 'cocodrilo', countryCodes: ['KE', 'TZ', 'ZA', 'EG', 'AU']},
-    {emoji: '🐫', name: 'camello', countryCodes: ['EG', 'DZ', 'MA', 'MR', 'SA', 'AE']},
-    {emoji: '🐒', name: 'mono', countryCodes: ['BR', 'CO', 'EC', 'PE', 'CG', 'CD', 'GA']},
-    {emoji: '🦜', name: 'loro', countryCodes: ['BR', 'CO', 'EC', 'PE', 'AU', 'ID', 'PG']},
-    {emoji: '🦉', name: 'búho', countryCodes: ['US', 'CA', 'GB', 'FR', 'DE', 'RU', 'JP']},
-    {emoji: '🐧', name: 'pingüino', countryCodes: ['AR', 'CL', 'ZA', 'AU', 'NZ']},
-    {emoji: '🐻', name: 'oso pardo', countryCodes: ['RU', 'CA', 'US', 'FI', 'SE', 'NO', 'ES', 'FR']},
-    {emoji: '🐺', name: 'lobo', countryCodes: ['US', 'CA', 'RU', 'FI', 'SE', 'NO', 'ES', 'FR', 'DE']},
-    {emoji: '🦊', name: 'zorro', countryCodes: ['GB', 'FR', 'DE', 'ES', 'IT', 'US', 'CA', 'AU']},
-    {emoji: '🦌', name: 'ciervo', countryCodes: ['US', 'CA', 'GB', 'FR', 'DE', 'ES', 'IT', 'SE', 'NO']},
-    {emoji: '🦔', name: 'erizo', countryCodes: ['GB', 'FR', 'DE', 'ES', 'IT', 'NL', 'BE', 'DK']},
-    {emoji: '🦅', name: 'águila', countryCodes: ['US', 'MX', 'CA', 'ES', 'FR', 'DE', 'IT', 'PL', 'RU', 'JP']},
-];
 
 export const puzzleFlags = ['JP', 'ES', 'FR', 'CA', 'GB', 'DE', 'IT', 'BR'];
 

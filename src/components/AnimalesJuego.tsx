@@ -4,7 +4,7 @@ import { useSpeech } from '../hooks/useSpeech';
 import { FLAG_BASE, handleFlagError } from '../utils/game';
 import type { GameProps } from '../utils/game';
 import type { Country } from '../data/countries';
-import { animals } from '../data/countries';
+import { animals } from '../data/animals';
 import { BackButton } from './BackButton';
 
 const ROUNDS_TOTAL = 5;
