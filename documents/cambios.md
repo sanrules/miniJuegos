@@ -1,7 +1,8 @@
-- Eliminar el doble toque en el menú -> no es cómodo y no es usable. Tocamos, leemos en voz alta y entramos. En PC (con ratón) si pasamos el cursor por arriba lee el nombre.
+- Eliminar el doble toque en el menú -> no es cómodo y no es usable. Tocamos, leemos en voz alta y entramos. En PC (con ratón) si pasamos el cursor por arriba lee el nombre. (implementado parcialmente)
 - Evitar que las banderas se repitan en rondas seguidas. Ej.: si ahora ha salido sudáfrica, que la siguiente no sea sudáfrica.
 - Mantener los textos al mínimo, sustituir los textos que se pueda por emojis. Adaptarlo para niños en etapa de PRE-LECTURA.
 - En "lluvia de banderas", no está leyendo la bandera que tiene que atrapar.
 - En "lluvia de banderas", cuando atrapes la bandera, cambiala.
 - En "lluvia de banderas", modifica la velocidad de caída para que sea ligeramente más lenta.
 - En "cual es la diferente" siempre se repiten las mismas banderas.
+- Cuando entras a cualquier minijuego, solo lee el título pero no el nombre del país.

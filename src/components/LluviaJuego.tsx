@@ -6,6 +6,7 @@ import type { Country } from '../data/countries';
 interface LluviaJuegoProps {
   continentCountries: Country[];
   onBack: () => void;
+  onFinish?: (score: number) => void;
 }
 
 const FLAG_BASE = 'https://flagcdn.com';
@@ -26,7 +27,7 @@ const FALL_SPEED = 0.15;
 
 let flagIdCounter = 0;
 
-export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
+export function LluviaJuego({ continentCountries, onBack, onFinish }: LluviaJuegoProps) {
   const { speak } = useSpeech();
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(continentCountries);
 
@@ -35,6 +36,7 @@ export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
   const rafRef = useRef<number>(0);
   const lastSpawnRef = useRef(0);
   const roundStartRef = useRef(0);
+  const scoreRef = useRef(0);
 
   const [target, setTarget] = useState<Country | null>(null);
   const [flags, setFlags] = useState<FallingFlag[]>([]);
@@ -102,6 +104,7 @@ export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
       if (remaining <= 0) {
         setPlaying(false);
         setGameOver(true);
+        onFinish?.(scoreRef.current);
         return;
       }
 
@@ -133,7 +136,7 @@ export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
 
     if (flag.isTarget) {
       flag.caught = true;
-      setScore(s => s + 10);
+      setScore(s => { const n = s + 10; scoreRef.current = n; return n; });
       adjustWeight(flag.country.code, true);
       speak(`¡${flag.country.name}!`);
     } else {
@@ -146,6 +149,7 @@ export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
 
   const playAgain = () => {
     setScore(0);
+    scoreRef.current = 0;
     setRound(r => r + 1);
     generateRound();
   };
@@ -157,11 +161,19 @@ export function LluviaJuego({ continentCountries, onBack }: LluviaJuegoProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-cyan-50 py-4 px-4 overflow-hidden">
       <header className="max-w-3xl mx-auto mb-2 flex items-center justify-between relative z-10">
-        <button onClick={onBack} className="p-2 bg-white/80 rounded-xl shadow-md" aria-label="Volver">
-          <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={onBack} className="p-2 bg-white/80 rounded-xl shadow-md" aria-label="Volver">
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <button
+            onClick={() => onFinish?.(score)}
+            className="px-3 py-2 bg-white/80 rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-sm font-medium text-gray-600"
+          >
+            🏁
+          </button>
+        </div>
         <h1 className="text-lg md:text-xl font-bold text-gray-800 flex-1 text-center">Lluvia de Banderas</h1>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-gray-500 font-medium">Ronda {round}</span>

@@ -6,13 +6,14 @@ import type { Country } from '../data/countries';
 interface RascaJuegoProps {
   continentCountries: Country[];
   onBack: () => void;
+  onFinish?: (score: number) => void;
 }
 
 const FLAG_BASE = 'https://flagcdn.com';
 const BRUSH_RADIUS = 28;
 const REVEAL_THRESHOLD = 0.55;
 
-export function RascaJuego({ continentCountries, onBack }: RascaJuegoProps) {
+export function RascaJuego({ continentCountries, onBack, onFinish }: RascaJuegoProps) {
   const { speak } = useSpeech();
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(continentCountries);
 
@@ -191,11 +192,19 @@ export function RascaJuego({ continentCountries, onBack }: RascaJuegoProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-4 flex items-center justify-between">
-        <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Volver">
-          <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Volver">
+            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <button
+            onClick={() => onFinish?.(score)}
+            className="px-3 py-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-sm font-medium text-gray-600"
+          >
+            🏁
+          </button>
+        </div>
         <h1 className="text-xl md:text-2xl font-bold text-gray-800 flex-1 text-center">Rasca y Descubre</h1>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-gray-500 font-medium">Ronda {round}</span>

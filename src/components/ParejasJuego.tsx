@@ -5,12 +5,13 @@ import type { Country } from '../data/countries';
 interface ParejasJuegoProps {
   continentCountries: Country[];
   onBack: () => void;
+  onFinish?: (score: number) => void;
 }
 
 const FLAG_BASE = 'https://flagcdn.com';
 const PAIRS_COUNT = 4;
 
-export function ParejasJuego({ continentCountries, onBack }: ParejasJuegoProps) {
+export function ParejasJuego({ continentCountries, onBack, onFinish }: ParejasJuegoProps) {
   const { speak } = useSpeech();
 
   const [countries, setCountries] = useState<Country[]>([]);
@@ -19,6 +20,7 @@ export function ParejasJuego({ continentCountries, onBack }: ParejasJuegoProps) 
   const [solvedCodes, setSolvedCodes] = useState<Set<string>>(new Set());
   const [shakingCode, setShakingCode] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
 
   const initGame = useCallback(() => {
     if (continentCountries.length < PAIRS_COUNT) return;
@@ -65,9 +67,13 @@ export function ParejasJuego({ continentCountries, onBack }: ParejasJuegoProps) 
       updated.add(country.code);
       setSolvedCodes(updated);
       setSelectedTop(null);
+      setScore(s => s + 10);
 
       if (updated.size === PAIRS_COUNT) {
-        setTimeout(() => setGameOver(true), 600);
+        setTimeout(() => {
+          setGameOver(true);
+          onFinish?.(score + 10);
+        }, 600);
       }
     } else {
       setShakingCode(country.code);
@@ -88,11 +94,19 @@ export function ParejasJuego({ continentCountries, onBack }: ParejasJuegoProps) 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50 py-6 px-4">
       <header className="max-w-3xl mx-auto mb-6 flex items-center justify-between">
-        <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Volver">
-          <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={onBack} className="p-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all" aria-label="Volver">
+            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <button
+            onClick={() => onFinish?.(score)}
+            className="px-3 py-3 bg-white rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all text-sm font-medium text-gray-600"
+          >
+            🏁
+          </button>
+        </div>
         <h1 className="text-xl md:text-2xl font-bold text-gray-800 flex-1 text-center">Hacer Parejas</h1>
         <div className="w-12" />
       </header>
