@@ -1,0 +1,30 @@
+/* Bloquear scroll, zoom y movimiento para pantallas táctiles */
+html {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height para móviles modernos */
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  touch-action: none; /* Bloquea gestos táctiles */
+}
+
+/* Evita zoom pinch en móviles */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* Bloquea scroll en todos los elementos */
+* {
+  touch-action: none;
+  overscroll-behavior: none;
+}
