@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../../utils/game.ts';
 import type { GameProps } from '../../utils/game.ts';
 import { countries as allCountries, type Country } from '../../data/countries.ts';
@@ -11,6 +12,7 @@ const ROUND_TOTAL = 10;
 
 export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
+  useScrollLock();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
   const lastCodeRef = useRef<string | null>(null);
@@ -108,7 +110,7 @@ export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GamePro
           </div>
           <p className="text-xl font-bold text-gray-700 mb-2">✅ {correctCount}/{ROUND_TOTAL}</p>
           <p className="text-lg text-gray-500 mb-6">❌ {incorrectCount} errores</p>
-          <button onClick={onBack} className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-indigo-600 active:scale-95 transition-all"><span className="text-xl">⬅️</span><span>Atrás</span></button>
+          <button onClick={onBack} className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-indigo-600 active:scale-95 transition-[...]
         </div>
       </div>
     );
@@ -119,7 +121,7 @@ export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GamePro
       <header className="max-w-3xl mx-auto mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BackButton onClick={onBack} />
-          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="text-xl">🏁</span><span className="text-sm font-bold text-gray-600">Terminar</span></button>
+          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span classN[...]
         </div>
         <div className="flex gap-1">
           {Array.from({ length: Math.max(starCount, 1) }).map((_, i) => (<span key={i} className="text-2xl">⭐</span>))}
@@ -153,7 +155,7 @@ export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GamePro
                     : 'border-transparent hover:border-indigo-300 hover:shadow-xl active:scale-[0.97] cursor-pointer'}`}
               >
                 <img src={`${FLAG_BASE}/${country.code.toLowerCase()}.svg`} alt="" onError={handleFlagError} className="w-full h-full object-contain drop-shadow-sm" />
-                {isCorrect && <span className="absolute inset-0 flex items-center justify-center bg-green-500/10 rounded-2xl"><span className="text-6xl md:text-7xl drop-shadow-lg animate-bounce">🎉</span></span>}
+                {isCorrect && <span className="absolute inset-0 flex items-center justify-center bg-green-500/10 rounded-2xl"><span className="text-6xl md:text-7xl drop-shadow-lg animate-bounce">🎉<[...]
                 {isWrong && <span className="absolute inset-0 flex items-center justify-center bg-red-500/10 rounded-2xl"><span className="text-5xl md:text-6xl opacity-70">❌</span></span>}
               </button>
             );
