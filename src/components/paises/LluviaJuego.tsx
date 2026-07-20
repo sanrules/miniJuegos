@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
@@ -19,6 +20,7 @@ interface FallingFlag {
 }
 
 export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock();
   const { speak } = useSpeech();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);

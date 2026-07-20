@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
@@ -9,6 +10,7 @@ import type { GameCard } from '../../utils/sharedGame.ts';
 import type { Country } from '../../data/countries.ts';
 
 export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock();
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);

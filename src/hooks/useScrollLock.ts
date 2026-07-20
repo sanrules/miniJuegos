@@ -26,11 +26,14 @@ export function useScrollLock(enabled = true) {
     document.addEventListener('gesturestart', handleGesture, { passive: false });
 
     return () => {
-      document.documentElement.style.overflow = 'auto';
-      document.body.style.overflow = 'auto';
-      document.body.style.position = 'static';
-      document.body.style.touchAction = 'auto';
-      
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.touchAction = '';
+
       document.removeEventListener('wheel', handleWheel);
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('gesturestart', handleGesture);

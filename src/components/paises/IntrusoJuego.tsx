@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
@@ -30,6 +31,7 @@ function pickIntrusoSet(pool: Country[]): { set: Country[]; intruder: Country } 
 }
 
 export function IntrusoJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock();
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
   const { adjustWeight } = useAdaptiveLearning(poolCountries);
