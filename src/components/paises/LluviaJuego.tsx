@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { FLAG_BASE, getExpertDistractors, handleFlagError } from '../../utils/game.ts';
 import type { GameProps } from '../../utils/game.ts';
 import type { Country } from '../../data/countries.ts';
@@ -20,6 +21,7 @@ interface FallingFlag {
 
 export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
+  useScrollLock();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
   const lastTargetRef = useRef<string | null>(null);
@@ -135,7 +137,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
           <div className="flex gap-2 justify-center mb-6">
             {Array.from({ length: starCount }).map((_, i) => (<span key={i} className="text-3xl">⭐</span>))}
           </div>
-          <button onClick={onBack} className="inline-flex items-center gap-2 px-8 py-3 bg-blue-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-blue-600 active:scale-95 transition-all"><span className="text-xl">⬅️</span><span>Atrás</span></button>
+          <button onClick={onBack} className="inline-flex items-center gap-2 px-8 py-3 bg-blue-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-blue-600 active:scale-95 transition[...]
         </div>
       </div>
     );
@@ -146,7 +148,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
       <header className="max-w-3xl mx-auto mb-4 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-2">
           <BackButton onClick={onBack} />
-          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="text-xl">🏁</span><span className="text-sm font-bold text-gray-600">Terminar</span></button>
+          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="[...]
         </div>
         <div className="flex gap-1">{Array.from({ length: starCount }).map((_, i) => (<span key={i} className="text-2xl">⭐</span>))}</div>
         <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 py-2 shadow-md">
@@ -155,7 +157,7 @@ export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProp
         </div>
       </header>
 
-      <main ref={containerRef} className="relative max-w-md mx-auto h-[65vh] bg-gradient-to-b from-blue-100/50 to-transparent rounded-3xl overflow-hidden border-2 border-blue-100 touch-none select-none">
+      <main ref={containerRef} className="relative max-w-md mx-auto h-[65vh] bg-gradient-to-b from-blue-100/50 to-transparent rounded-3xl overflow-hidden border-2 border-blue-100 touch-none select-non[...]
         {flags.map(flag => (
           <button key={flag.id} onClick={() => handleTap(flag)}
             className="absolute transition-opacity duration-200 active:scale-110"
