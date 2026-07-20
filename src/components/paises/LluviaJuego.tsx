@@ -21,7 +21,7 @@ interface FallingFlag {
 
 export function LluviaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  useScrollLock(true);
+  useScrollLock();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
   const lastTargetRef = useRef<string | null>(null);
