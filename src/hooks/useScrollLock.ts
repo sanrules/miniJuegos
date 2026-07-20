@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 
-export function useScrollLock() {
+export function useScrollLock(enabled = true) {
   useEffect(() => {
+    if (!enabled) return;
+
     // Bloquear scroll en documentElement y body
     document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.height = '100vh';
@@ -33,5 +35,5 @@ export function useScrollLock() {
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('gesturestart', handleGesture);
     };
-  }, []);
+  }, [enabled]);
 }
