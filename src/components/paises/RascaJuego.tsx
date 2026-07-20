@@ -11,7 +11,7 @@ import type { Country } from '../../data/countries.ts';
 
 export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  useScrollLock();
+  useScrollLock(true);
   useLevelGreeting(level, speak);
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);
   const lastCodeRef = useRef<string | null>(null);
