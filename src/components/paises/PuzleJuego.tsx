@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useSpeech } from '../../hooks/useSpeech.ts';
@@ -26,6 +27,7 @@ function HalfBackground({ code, side, className }: { code: string; side: 'left' 
 }
 
 export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock(true);
   const { speak } = useSpeech();
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);
   const [target, setTarget] = useState<Country | null>(null);

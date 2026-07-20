@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
@@ -10,6 +11,7 @@ import {BackButton} from "../comunes/BackButton.tsx";
 const ROUND_TOTAL = 10;
 
 export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock(true);
   const { speak } = useSpeech();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);

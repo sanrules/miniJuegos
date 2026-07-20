@@ -2,6 +2,7 @@ import confetti from 'canvas-confetti';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useCallback, useEffect, useState} from 'react';
 import type {Country} from '../../data/countries.ts';
+import {useScrollLock} from '../../hooks/useScrollLock.ts';
 import {useAdaptiveLearning} from '../../hooks/useAdaptiveLearning.ts';
 import {useSpeech} from '../../hooks/useSpeech.ts';
 import type {GameProps} from '../../utils/game.ts';
@@ -23,6 +24,7 @@ const surprises = ['🐦', '🐿️', '🦊', '🐸', '🦋'];
 
 export function CucuJuego({poolCountries, onBack, onFinish}: GameProps) {
     const {speak} = useSpeech();
+    useScrollLock(true);
     const {getRandomCountry} = useAdaptiveLearning(poolCountries);
 
     function shuffleSpots(): Spot[] {

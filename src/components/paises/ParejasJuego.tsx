@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { FLAG_BASE, handleFlagError } from '../../utils/game.ts';
@@ -7,6 +8,7 @@ import type { GameProps } from '../../utils/game.ts';
 import type { GameCard } from '../../utils/sharedGame.ts';
 
 export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
+  useScrollLock(true);
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
 
