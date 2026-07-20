@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
 import { useLevelGreeting } from '../../hooks/useLevelGreeting.ts';
 import { useSpeech } from '../../hooks/useSpeech.ts';
-import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { FLAG_BASE, handleFlagError } from '../../utils/game.ts';
 import { SharedIntruso } from '../comunes/SharedIntruso.tsx';
 import type { GameProps } from '../../utils/game.ts';
@@ -32,7 +31,6 @@ function pickIntrusoSet(pool: Country[]): { set: Country[]; intruder: Country } 
 
 export function IntrusoJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  useScrollLock();
   useLevelGreeting(level, speak);
   const { adjustWeight } = useAdaptiveLearning(poolCountries);
 
