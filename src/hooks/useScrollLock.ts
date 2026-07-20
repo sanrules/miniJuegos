@@ -17,7 +17,7 @@ export function useScrollLock() {
     // Prevenir gestos de zoom y scroll
     const handleWheel = (e: WheelEvent) => e.preventDefault();
     const handleTouchMove = (e: TouchEvent) => e.preventDefault();
-    const handleGesture = (e: GestureEvent) => e.preventDefault();
+    const handleGesture = (e: Event) => e.preventDefault();
 
     document.addEventListener('wheel', handleWheel, { passive: false });
     document.addEventListener('touchmove', handleTouchMove, { passive: false });
