@@ -1,7 +1,6 @@
 import {useCallback} from 'react';
 import {type Continent, continentAnimals, continentColors, continentNames, continents} from '../../data/countries.ts';
 import {useSpeech} from '../../hooks/useSpeech.ts';
-import {useScrollLock} from '../../hooks/useScrollLock.ts';
 import {BackButton} from "../comunes/BackButton.tsx";
 
 interface MapSelectionProps {
@@ -11,7 +10,6 @@ interface MapSelectionProps {
 
 export function MapSelection({onSelectContinent, onBack}: MapSelectionProps) {
     const {speak} = useSpeech();
-    useScrollLock();
 
     const handlePress = useCallback((continent: Continent) => {
         speak(`¡${continentNames[continent]}!`);
