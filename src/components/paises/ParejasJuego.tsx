@@ -8,7 +8,7 @@ import type { GameProps } from '../../utils/game.ts';
 import type { GameCard } from '../../utils/sharedGame.ts';
 
 export function ParejasJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
-  useScrollLock();
+  useScrollLock(true);
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
 

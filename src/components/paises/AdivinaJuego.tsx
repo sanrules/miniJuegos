@@ -11,7 +11,7 @@ import {BackButton} from "../comunes/BackButton.tsx";
 const ROUND_TOTAL = 10;
 
 export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
-  useScrollLock();
+  useScrollLock(true);
   const { speak } = useSpeech();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);

@@ -31,7 +31,7 @@ function pickIntrusoSet(pool: Country[]): { set: Country[]; intruder: Country } 
 }
 
 export function IntrusoJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
-  useScrollLock();
+  useScrollLock(true);
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
   const { adjustWeight } = useAdaptiveLearning(poolCountries);

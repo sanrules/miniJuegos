@@ -10,7 +10,7 @@ import type { GameCard } from '../../utils/sharedGame.ts';
 import type { Country } from '../../data/countries.ts';
 
 export function RascaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
-  useScrollLock();
+  useScrollLock(true);
   const { speak } = useSpeech();
   useLevelGreeting(level, speak);
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);

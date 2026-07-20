@@ -27,7 +27,7 @@ function HalfBackground({ code, side, className }: { code: string; side: 'left' 
 }
 
 export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
-  useScrollLock();
+  useScrollLock(true);
   const { speak } = useSpeech();
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);
   const [target, setTarget] = useState<Country | null>(null);
