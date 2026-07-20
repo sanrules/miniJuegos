@@ -12,7 +12,7 @@ const ROUND_TOTAL = 10;
 
 export function AdivinaJuego({ level, poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  useScrollLock(true);
+  useScrollLock();
   const greet = useLevelGreeting(level, speak);
   const { adjustWeight, getRandomCountry } = useAdaptiveLearning(poolCountries);
   const lastCodeRef = useRef<string | null>(null);
