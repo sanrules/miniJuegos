@@ -7,6 +7,7 @@ import {useSpeech} from '../../hooks/useSpeech.ts';
 import type {GameProps} from '../../utils/game.ts';
 import {FLAG_BASE, handleFlagError} from '../../utils/game.ts';
 import {BackButton} from '../comunes/BackButton';
+import { useScrollLock } from '../../hooks/useScrollLock.ts';
 
 interface Spot {
     emoji: string;
@@ -24,6 +25,7 @@ const surprises = ['🐦', '🐿️', '🦊', '🐸', '🦋'];
 export function CucuJuego({poolCountries, onBack, onFinish}: GameProps) {
     const {speak} = useSpeech();
     const {getRandomCountry} = useAdaptiveLearning(poolCountries);
+    useScrollLock(true);
 
     function shuffleSpots(): Spot[] {
         return [...spots].sort(() => Math.random() - 0.5);
