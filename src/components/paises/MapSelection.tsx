@@ -11,7 +11,7 @@ interface MapSelectionProps {
 
 export function MapSelection({onSelectContinent, onBack}: MapSelectionProps) {
     const {speak} = useSpeech();
-    useScrollLock(true);
+    useScrollLock();
 
     const handlePress = useCallback((continent: Continent) => {
         speak(`¡${continentNames[continent]}!`);
