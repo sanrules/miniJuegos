@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useSpeech } from '../../hooks/useSpeech.ts';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning.ts';
-import { useScrollLock } from '../../hooks/useScrollLock.ts';
 import { FLAG_BASE } from '../../utils/game.ts';
 import type { GameProps } from '../../utils/game.ts';
 import type { Country } from '../../data/countries.ts';
@@ -28,7 +27,6 @@ function HalfBackground({ code, side, className }: { code: string; side: 'left' 
 
 export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
   const { speak } = useSpeech();
-  useScrollLock();
   const { getRandomCountry, adjustWeight } = useAdaptiveLearning(poolCountries);
   const [target, setTarget] = useState<Country | null>(null);
   const [options, setOptions] = useState<Country[]>([]);
@@ -71,7 +69,7 @@ export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
       <header className="max-w-3xl mx-auto mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <BackButton onClick={onBack} />
-          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="[...]
+          <button onClick={() => onFinish?.(score)} className="flex items-center gap-1.5 px-3 py-3 bg-white rounded-xl shadow-md active:scale-95 transition-all" aria-label="Terminar"><span className="text-xl">🏁</span><span className="text-sm font-bold text-gray-600">Terminar</span></button>
         </div>
       </header>
 
@@ -102,7 +100,7 @@ export function PuzleJuego({ poolCountries, onBack, onFinish }: GameProps) {
             return (
               <button key={country.code} onClick={() => handleSelect(country)} disabled={solved}
                 className={`relative aspect-[4/3] rounded-2xl bg-white shadow-lg border-[5px] transition-all flex items-center justify-center overflow-hidden
-                  ${solved && country.code === target?.code ? 'border-green-400 bg-green-50 scale-105 shadow-xl' : isWrong ? 'border-red-300 bg-red-50 animate-shake' : 'border-transparent hover:b[...]
+                  ${solved && country.code === target?.code ? 'border-green-400 bg-green-50 scale-105 shadow-xl' : isWrong ? 'border-red-300 bg-red-50 animate-shake' : 'border-transparent hover:border-cyan-300 hover:shadow-xl active:scale-95 cursor-pointer'}`}>
                 <HalfBackground code={country.code} side="right" className="w-1/2 h-full" />
               </button>
             );
